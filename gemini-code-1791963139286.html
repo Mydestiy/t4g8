@@ -1,0 +1,2199 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đề Thi Family Life (40 Câu) - Ms Lê Hằng English</title>
+  <!-- Google Fonts: Nunito & Quicksand -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Quicksand:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <style>
+    :root {
+      --primary-purple: #8854C0;
+      --primary-pink: #FD79A8;
+      --primary-yellow: #FDCB6E;
+      --primary-teal: #00C9A7;
+      --primary-blue: #0984E3;
+      --correct-green: #00D26A;
+      --correct-green-shadow: #00a352;
+      --wrong-red: #FF4757;
+      --wrong-red-shadow: #d63031;
+      --card-bg: rgba(255, 255, 255, 0.96);
+      --text-main: #2D3436;
+      --text-muted: #636E72;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Nunito', 'Quicksand', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      min-height: 100vh;
+      color: var(--text-main);
+      background: linear-gradient(180deg, #bbf2f6 0%, #d8e8f8 25%, #fedacb 60%, #fed1c0 85%, #fca289 100%);
+      position: relative;
+      overflow-x: hidden;
+      padding: 16px 12px 140px;
+    }
+
+    /* Bầu trời, Mặt trời phát sáng & Mây trôi */
+    .sky-decorations {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .sun-glow {
+      position: absolute;
+      top: 25px;
+      left: -20px;
+      width: 140px;
+      height: 140px;
+      background: radial-gradient(circle, #ffeaa7 40%, rgba(255, 234, 167, 0.4) 70%, transparent 100%);
+      border-radius: 50%;
+      filter: blur(10px);
+      animation: pulseSun 6s ease-in-out infinite alternate;
+    }
+
+    @keyframes pulseSun {
+      0% { transform: scale(0.95); opacity: 0.8; }
+      100% { transform: scale(1.1); opacity: 1; }
+    }
+
+    .floating-cloud {
+      position: absolute;
+      fill: rgba(255, 255, 255, 0.75);
+      animation: floatCloud linear infinite;
+    }
+
+    .cloud-1 { top: 60px; left: -120px; width: 140px; animation-duration: 48s; }
+    .cloud-2 { top: 180px; left: -160px; width: 180px; animation-duration: 65s; animation-delay: -25s; }
+
+    @keyframes floatCloud {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(calc(100vw + 250px)); }
+    }
+
+    /* Dãy phố Skyline & Con đường vỉa hè sọc đỏ trắng */
+    .city-backdrop {
+      position: fixed;
+      bottom: 42px;
+      left: 0;
+      width: 100%;
+      height: 150px;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.55;
+      background-repeat: repeat-x;
+      background-position: bottom center;
+      background-size: 550px 140px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 550 140'%3E%3Cpath fill='%23a5cbf5' d='M0,140 L0,70 L30,70 L30,50 L45,50 L45,30 L60,30 L60,70 L90,70 L90,140 Z M100,140 L100,40 L140,40 L140,140 Z M150,140 L150,65 L180,65 L180,140 Z M190,140 L190,20 L230,20 L230,140 Z M240,140 L240,55 L280,55 L280,140 Z M290,140 L290,35 L330,35 L330,140 Z M340,140 L340,75 L380,75 L380,140 Z M390,140 L390,15 L430,15 L430,140 Z M440,140 L440,60 L490,60 L490,140 Z M500,140 L500,45 L540,45 L540,140 Z'/%3E%3C/svg%3E");
+    }
+
+    .bottom-road {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 44px;
+      background: #4b4b4b;
+      border-top: 5px solid #2ed573;
+      z-index: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      overflow: hidden;
+    }
+
+    .road-curb {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: repeating-linear-gradient(90deg, #ff4757, #ff4757 25px, #ffffff 25px, #ffffff 50px);
+    }
+
+    .road-line {
+      height: 6px;
+      width: 45px;
+      background: #ffffff;
+      border-radius: 3px;
+      opacity: 0.9;
+    }
+
+    .container {
+      max-width: 880px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Top Sticky Bar */
+    .top-sticky-bar {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      padding: 10px 16px;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+      border: 2px solid #ffffff;
+      margin-bottom: 14px;
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 10px;
+      z-index: 100;
+    }
+
+    .progress-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .star-score-pill {
+      background: linear-gradient(135deg, #ff7675, #e84393);
+      color: white;
+      font-weight: 900;
+      font-size: 0.88rem;
+      padding: 4px 12px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      box-shadow: 0 3px 0 #d63031;
+      white-space: nowrap;
+    }
+
+    .progress-track {
+      flex: 1;
+      height: 14px;
+      background: #E2E8F0;
+      border-radius: 999px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #00C9A7, #00D26A);
+      border-radius: 999px;
+      transition: width 0.4s ease;
+    }
+
+    .progress-count-pill {
+      background: #00C9A7;
+      color: white;
+      font-weight: 900;
+      font-size: 0.88rem;
+      padding: 4px 12px;
+      border-radius: 999px;
+      box-shadow: 0 3px 0 #008770;
+      white-space: nowrap;
+    }
+
+    .teacher-contact-pill {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 6px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #2D3436;
+      padding-top: 4px;
+      border-top: 1px dashed #E2E8F0;
+    }
+
+    .teacher-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-weight: 800;
+      color: #6C5CE7;
+    }
+
+    .phone-tag {
+      background: #FF7675;
+      color: white;
+      padding: 2px 8px;
+      border-radius: 8px;
+      font-weight: 800;
+      font-size: 0.8rem;
+    }
+
+    /* Hero Banner */
+    .unit-hero-card {
+      background: #FFFFFF;
+      border-radius: 28px;
+      padding: 22px 24px;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      border: 3px solid #FFFFFF;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-content {
+      max-width: 72%;
+    }
+
+    .unit-badge {
+      display: inline-block;
+      background: #0984E3;
+      color: white;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 900;
+      letter-spacing: 0.4px;
+      margin-bottom: 10px;
+      box-shadow: 0 3px 0 #0764ad;
+    }
+
+    .hero-title {
+      font-size: 1.85rem;
+      font-weight: 900;
+      color: #0984E3;
+      line-height: 1.25;
+      margin-bottom: 8px;
+    }
+
+    .hero-subtitle {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #636E72;
+      line-height: 1.5;
+    }
+
+    .hero-graphic {
+      width: 105px;
+      height: 105px;
+      background: radial-gradient(circle, #E1F0FF 60%, #CCE5FF 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 15px rgba(9, 132, 227, 0.15);
+      position: relative;
+    }
+
+    .hero-graphic svg {
+      width: 70px;
+      height: 70px;
+    }
+
+    /* Khung nhắc nhở bắt buộc */
+    .warning-box {
+      background: linear-gradient(135deg, #FFF9E6, #FFF0C2);
+      border: 3px solid #FDCB6E;
+      border-radius: 22px;
+      padding: 18px 22px;
+      margin-bottom: 24px;
+      box-shadow: 0 8px 20px rgba(253, 203, 110, 0.35);
+      position: relative;
+    }
+
+    .warning-title {
+      font-size: 1.08rem;
+      font-weight: 900;
+      color: #D35400;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .warning-text {
+      font-size: 0.98rem;
+      line-height: 1.6;
+      font-weight: 700;
+      color: #7A4100;
+    }
+
+    .warning-tag {
+      display: inline-block;
+      margin-top: 8px;
+      background: #E17055;
+      color: white;
+      padding: 3px 12px;
+      border-radius: 12px;
+      font-weight: 800;
+      font-size: 0.85rem;
+    }
+
+    /* Tiêu đề từng phần bài */
+    .exercise-divider {
+      background: linear-gradient(135deg, #6C5CE7, #8854C0);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 18px;
+      margin: 28px 0 16px;
+      font-size: 1.05rem;
+      font-weight: 900;
+      box-shadow: 0 6px 0 #4834D4;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Thẻ câu hỏi */
+    .question-card {
+      background: var(--card-bg);
+      border-radius: 26px;
+      padding: 22px 22px;
+      margin-bottom: 24px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+      border: 3px solid #FFFFFF;
+      transition: transform 0.2s ease;
+      position: relative;
+    }
+
+    .question-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .question-num {
+      background: linear-gradient(135deg, #6c5ce7, #8854C0);
+      color: white;
+      font-size: 0.95rem;
+      font-weight: 900;
+      padding: 5px 16px;
+      border-radius: 14px;
+      box-shadow: 0 3px 0 #4834d4;
+    }
+
+    .question-type-badge {
+      font-size: 0.82rem;
+      font-weight: 800;
+      padding: 4px 14px;
+      border-radius: 12px;
+      background: #E8F8F5;
+      color: #00A884;
+      border: 1.5px solid #00C9A7;
+    }
+
+    .question-content {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #2D3436;
+      line-height: 1.6;
+      margin-bottom: 18px;
+    }
+
+    /* Hộp thông báo trong đề thi */
+    .announcement-box {
+      background: #FFFFFF;
+      border: 2.5px solid #2D3436;
+      border-radius: 18px;
+      padding: 18px 22px;
+      margin-bottom: 20px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+    }
+
+    .announcement-header {
+      text-align: center;
+      font-weight: 900;
+      font-size: 1.15rem;
+      color: #D35400;
+      margin-bottom: 12px;
+      border-bottom: 2px dashed #E2E8F0;
+      padding-bottom: 8px;
+    }
+
+    /* Đoạn văn đọc hiểu */
+    .passage-box {
+      background: #F8F9FE;
+      border: 2px solid #E2E8F0;
+      border-radius: 20px;
+      padding: 18px 22px;
+      margin-bottom: 22px;
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: #2D3436;
+      font-weight: 600;
+    }
+
+    /* Gạch chân âm phát âm */
+    .phonetic-u, u {
+      color: #D63031 !important;
+      text-decoration: underline !important;
+      text-decoration-thickness: 3px !important;
+      text-underline-offset: 4px !important;
+      font-weight: 900;
+    }
+
+    /* Nút đáp án 3D */
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    @media (min-width: 600px) {
+      .options-grid.two-cols {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .option-btn {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      background: #FFFFFF;
+      border: 2.5px solid #E2E8F0;
+      border-radius: 18px;
+      padding: 12px 18px;
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: #2D3436;
+      cursor: pointer;
+      text-align: left;
+      transition: transform 0.15s ease, background-color 0.2s ease, border-color 0.2s ease, box-shadow 0.15s ease;
+      box-shadow: 0 5px 0 #CBD5E1;
+      position: relative;
+      outline: none;
+    }
+
+    .option-btn:hover:not(:disabled) {
+      transform: translateY(-2px) scale(1.02);
+      border-color: #A29BFE;
+      box-shadow: 0 7px 0 #a29bfe;
+      background: #FDFBFF;
+    }
+
+    .option-btn:active:not(:disabled) {
+      transform: translateY(3px);
+      box-shadow: 0 2px 0 #CBD5E1;
+    }
+
+    .option-key {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      min-width: 32px;
+      background: #F1F2F6;
+      color: #6C5CE7;
+      border-radius: 10px;
+      margin-right: 12px;
+      font-weight: 900;
+      font-size: 0.95rem;
+      border: 1.5px solid #DFE4EA;
+    }
+
+    .option-btn.correct {
+      background: #E8FBF0 !important;
+      border-color: var(--correct-green) !important;
+      color: #056636 !important;
+      box-shadow: 0 5px 0 var(--correct-green-shadow) !important;
+    }
+
+    .option-btn.correct .option-key {
+      background: var(--correct-green);
+      color: white;
+      border-color: var(--correct-green-shadow);
+    }
+
+    .option-btn.wrong {
+      background: #FFF0F2 !important;
+      border-color: var(--wrong-red) !important;
+      color: #A31221 !important;
+      box-shadow: 0 5px 0 var(--wrong-red-shadow) !important;
+      animation: shake 0.45s ease-in-out;
+    }
+
+    .option-btn.wrong .option-key {
+      background: var(--wrong-red);
+      color: white;
+      border-color: var(--wrong-red-shadow);
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-8px); }
+      40%, 80% { transform: translateX(8px); }
+    }
+
+    /* Khung giải thích siêu chi tiết (Chuẩn ảnh 1) */
+    .explanation-box {
+      margin-top: 20px;
+      background: #FFFFFF;
+      border: 2px dashed #A29BFE;
+      border-radius: 22px;
+      padding: 18px 20px;
+      animation: slideDown 0.35s ease-out;
+      box-shadow: 0 8px 24px rgba(108, 92, 231, 0.08);
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .exp-title {
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: #E65100;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 12px;
+      letter-spacing: 0.5px;
+    }
+
+    .exp-translation-bubble {
+      background: #FFF9E6;
+      border-left: 5px solid #FDCB6E;
+      border-radius: 14px;
+      padding: 10px 14px;
+      font-size: 0.96rem;
+      font-weight: 700;
+      color: #2D3436;
+      line-height: 1.5;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .exp-translation-bubble .icon {
+      font-size: 1.25rem;
+    }
+
+    .exp-section-title {
+      font-size: 0.98rem;
+      font-weight: 900;
+      color: #2D3436;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .analysis-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    @media (min-width: 620px) {
+      .analysis-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .analysis-card {
+      background: #FFFFFF;
+      border: 1.8px solid #E2E8F0;
+      border-radius: 16px;
+      padding: 10px 14px;
+      font-size: 0.92rem;
+      line-height: 1.5;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    }
+
+    .analysis-word {
+      font-weight: 900;
+      font-size: 1rem;
+      color: #0984E3;
+      margin-right: 4px;
+    }
+
+    .analysis-word.green {
+      color: #00B894;
+    }
+
+    .badge-pill {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 8px;
+      font-size: 0.76rem;
+      font-weight: 800;
+      margin: 0 4px;
+      vertical-align: middle;
+    }
+
+    .badge-wrong {
+      background: #FEE2E2;
+      color: #DC2626;
+      border: 1px solid #FCA5A5;
+    }
+
+    .badge-structure {
+      background: #EDE9FE;
+      color: #6D28D9;
+      border: 1px solid #DDD6FE;
+    }
+
+    .badge-correct {
+      background: #D1FAE5;
+      color: #059669;
+      border: 1px solid #A7F3D0;
+    }
+
+    .analysis-meaning {
+      font-weight: 700;
+      color: #7A4100;
+    }
+
+    .exp-rule-row {
+      margin-bottom: 12px;
+      font-size: 0.96rem;
+      line-height: 1.6;
+      color: #2D3436;
+      font-weight: 600;
+    }
+
+    .exp-rule-row .check-label {
+      font-weight: 900;
+      color: #00A884;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-right: 6px;
+    }
+
+    .exp-rule-pill {
+      background: #FFF3CD;
+      color: #856404;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 10px;
+      margin: 0 4px;
+      display: inline-block;
+    }
+
+    .exp-highlight-green {
+      background: #E8F8F5;
+      color: #00A884;
+      font-weight: 900;
+      padding: 2px 8px;
+      border-radius: 8px;
+      display: inline-block;
+      margin: 0 2px;
+    }
+
+    .exp-wrong-row {
+      font-size: 0.96rem;
+      line-height: 1.6;
+      color: #2D3436;
+      font-weight: 600;
+    }
+
+    .exp-wrong-row .cross-label {
+      font-weight: 900;
+      color: #D63031;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      margin-right: 6px;
+    }
+
+    .exp-wrong-tag {
+      background: #FFEAEA;
+      color: #D63031;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 8px;
+      display: inline-block;
+      margin: 0 3px;
+    }
+
+    /* Submit Section */
+    .submit-section {
+      text-align: center;
+      margin-top: 36px;
+      margin-bottom: 50px;
+    }
+
+    .submit-btn {
+      background: linear-gradient(135deg, #00C9A7, #00B894);
+      color: white;
+      font-size: 1.25rem;
+      font-weight: 900;
+      padding: 16px 48px;
+      border: none;
+      border-radius: 999px;
+      box-shadow: 0 8px 0 #008770, 0 15px 25px rgba(0, 201, 167, 0.4);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      letter-spacing: 0.5px;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 11px 0 #008770, 0 18px 30px rgba(0, 201, 167, 0.5);
+    }
+
+    .submit-btn:active {
+      transform: translateY(4px);
+      box-shadow: 0 4px 0 #008770;
+    }
+
+    /* Result Modal */
+    .result-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.65);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      padding: 16px;
+      backdrop-filter: blur(5px);
+    }
+
+    .result-card {
+      background: white;
+      border-radius: 30px;
+      padding: 32px 26px;
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+      position: relative;
+      animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.85); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .result-emoji {
+      font-size: 3.5rem;
+      margin-bottom: 10px;
+      animation: bounce 1.5s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .result-score {
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: #6C5CE7;
+      margin-bottom: 12px;
+    }
+
+    .result-feedback {
+      background: #F8F9FE;
+      border-radius: 18px;
+      padding: 16px;
+      font-size: 1.05rem;
+      line-height: 1.6;
+      font-weight: 700;
+      color: #2D3436;
+      margin-bottom: 24px;
+      border: 2px dashed #A29BFE;
+    }
+
+    .retry-btn {
+      background: linear-gradient(135deg, #FDCB6E, #E17055);
+      color: white;
+      font-size: 1.1rem;
+      font-weight: 900;
+      padding: 12px 36px;
+      border: none;
+      border-radius: 999px;
+      box-shadow: 0 6px 0 #D35400;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .retry-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 0 #D35400;
+    }
+
+    .retry-btn:active {
+      transform: translateY(3px);
+      box-shadow: 0 3px 0 #D35400;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Sky & City -->
+  <div class="sky-decorations">
+    <div class="sun-glow"></div>
+    <svg class="floating-cloud cloud-1" viewBox="0 0 100 60"><path d="M20,40 Q10,40 10,30 Q10,20 25,20 Q30,10 45,10 Q60,10 65,20 Q80,20 80,30 Q90,30 90,40 Q90,50 80,50 L20,50 Z"/></svg>
+    <svg class="floating-cloud cloud-2" viewBox="0 0 100 60"><path d="M20,40 Q10,40 10,30 Q10,20 25,20 Q30,10 45,10 Q60,10 65,20 Q80,20 80,30 Q90,30 90,40 Q90,50 80,50 L20,50 Z"/></svg>
+  </div>
+  <div class="city-backdrop"></div>
+  <div class="bottom-road">
+    <div class="road-curb"></div>
+    <div class="road-line"></div><div class="road-line"></div><div class="road-line"></div><div class="road-line"></div><div class="road-line"></div><div class="road-line"></div><div class="road-line"></div>
+  </div>
+
+  <div class="container">
+
+    <!-- Top Sticky Bar -->
+    <div class="top-sticky-bar">
+      <div class="progress-row">
+        <div class="star-score-pill">
+          <span>⭐</span> <span id="star-score-text">0 / 40</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="progress-bar-fill"></div>
+        </div>
+        <div class="progress-count-pill" id="progress-ratio-text">0 / 40</div>
+      </div>
+      <div class="teacher-contact-pill">
+        <div class="teacher-badge">
+          <span>👩‍🏫</span> Giáo viên tạo: <strong>Ms Lê Hằng English</strong>
+        </div>
+        <div>
+          <span>Chuyên luyện thi HSG & Ôn thi vào lớp 10 chất lượng cao</span> • <span class="phone-tag">☎️ 0936.322.809</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero Card Banner -->
+    <div class="unit-hero-card">
+      <div class="hero-content">
+        <div class="unit-badge">🚆 UNIT 1 · FAMILY LIFE & HOUSEHOLD CHORES</div>
+        <h1 class="hero-title">Family Bonds Mastery</h1>
+        <div class="hero-subtitle">Phát âm | Ngữ pháp Thì hiện tại & Từ vựng | Sắp xếp hội thoại & Thư | Đọc hiểu & Điền từ | Tự luận Từ loại & Viết câu</div>
+      </div>
+      <div class="hero-graphic">
+        <svg viewBox="0 0 100 100">
+          <rect x="25" y="20" width="30" height="70" rx="4" fill="#0984E3"/>
+          <polygon points="25,20 40,5 55,20" fill="#0984E3"/>
+          <rect x="60" y="45" width="25" height="45" rx="3" fill="#74B9FF"/>
+          <circle cx="33" cy="32" r="3" fill="#FFF"/><circle cx="47" cy="32" r="3" fill="#FFF"/>
+          <circle cx="33" cy="46" r="3" fill="#FFF"/><circle cx="47" cy="46" r="3" fill="#FFF"/>
+          <circle cx="33" cy="60" r="3" fill="#FFF"/><circle cx="47" cy="60" r="3" fill="#FFF"/>
+          <circle cx="33" cy="74" r="3" fill="#FFF"/><circle cx="47" cy="74" r="3" fill="#FFF"/>
+          <circle cx="68" cy="56" r="2.5" fill="#FFF"/><circle cx="77" cy="56" r="2.5" fill="#FFF"/>
+          <circle cx="68" cy="68" r="2.5" fill="#FFF"/><circle cx="77" cy="68" r="2.5" fill="#FFF"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Khung thông báo bắt buộc -->
+    <div class="warning-box">
+      <div class="warning-title">⚠️ LỜI NHẮC CỰC KỲ QUAN TRỌNG ⚠️</div>
+      <div class="warning-text">
+        Chỉ có đọc kỹ giải thích ngay sau mỗi câu, sau đó ghi lại từ vựng/cấu trúc mới vào vở để học thì mới thực sự giỏi lên.<br>
+        Làm cho xong mà không đọc giải thích hay đọc qua loa không ghi chép thì chỉ tốn thời gian vô ích!
+      </div>
+      <div class="warning-tag">Kéo tới đâu, làm tới đó! *</div>
+    </div>
+
+    <!-- Nơi hiển thị các câu hỏi -->
+    <div id="quiz-container"></div>
+
+    <!-- Nút Nộp Bài -->
+    <div class="submit-section">
+      <button class="submit-btn" onclick="submitQuiz()">🎉 NỘP BÀI KIỂM TRA</button>
+    </div>
+
+  </div>
+
+  <!-- Popup kết quả -->
+  <div id="result-modal" class="result-modal">
+    <div class="result-card">
+      <div id="result-emoji" class="result-emoji">🌟</div>
+      <div id="result-score" class="result-score">0 / 40</div>
+      <div id="result-feedback" class="result-feedback"></div>
+      <button class="retry-btn" onclick="retryQuiz()">🔄 Làm lại bài</button>
+    </div>
+  </div>
+
+  <script>
+    // DỮ LIỆU ĐẦY ĐỦ 40 CÂU HỎI TỪ ĐỀ THI GỐC
+    const quizData = [
+      // I. PHẦN TRẮC NGHIỆM (Câu 1 - 28)
+      {
+        id: 1,
+        exTitle: "I. PHẦN TRẮC NGHIỆM - Mark the letter A, B, C or D to indicate the word whose underlined part differs from the other three in pronunciation in each of the following questions.",
+        question: "Question 1: Choose the word whose underlined part differs from the other three in pronunciation:",
+        options: [
+          { key: "A", text: "housew<u>i</u>fe", raw: "housewife" },
+          { key: "B", text: "<u>i</u>nterested", raw: "interested" },
+          { key: "C", text: "op<u>i</u>nion", raw: "opinion" },
+          { key: "D", text: "d<u>i</u>fferent", raw: "different" }
+        ],
+        correct: "A",
+        explanation: {
+          translation: "Chọn từ có phần gạch chân được phát âm khác với ba từ còn lại.",
+          cards: [
+            { word: "housewife", isCorrect: true, badgeText: "/aɪ/", badgeType: "badge-correct", meaning: "= người nội trợ (/ˈhaʊs.waɪf/)" },
+            { word: "interested", isCorrect: false, badgeText: "/ɪ/", badgeType: "badge-structure", meaning: "= quan tâm, thích thú (/ˈɪn.trə.stɪd/)" },
+            { word: "opinion", isCorrect: false, badgeText: "/ɪ/", badgeType: "badge-structure", meaning: "= ý kiến, quan điểm (/əˈpɪn.jən/)" },
+            { word: "different", isCorrect: false, badgeText: "/ɪ/", badgeType: "badge-structure", meaning: "= khác biệt (/ˈdɪf.ər.ənt/)" }
+          ],
+          whyCorrect: { ruleTitle: "Phát âm nguyên âm 'i'", detail: "Trong từ <span class='exp-highlight-green'>housewife</span>, chữ 'i' được phát âm là nguyên âm đôi <span class='exp-highlight-green'>/aɪ/</span>. Ba từ còn lại chữ 'i' đều phát âm là nguyên âm ngắn /ɪ/." },
+          whyWrong: [
+            { word: "interested", reason: "chữ 'i' đầu phát âm là /ɪ/." },
+            { word: "opinion", reason: "chữ 'i' phát âm là /ɪ/." },
+            { word: "different", reason: "chữ 'i' phát âm là /ɪ/." }
+          ]
+        }
+      },
+      {
+        id: 2,
+        exTitle: "I. PHẦN TRẮC NGHIỆM - Mark the letter A, B, C or D to indicate the word whose underlined part differs from the other three in pronunciation in each of the following questions.",
+        question: "Question 2: Choose the word whose underlined part differs from the other three in pronunciation:",
+        options: [
+          { key: "A", text: "support<u>s</u>", raw: "supports" },
+          { key: "B", text: "earn<u>s</u>", raw: "earns" },
+          { key: "C", text: "divide<u>s</u>", raw: "divides" },
+          { key: "D", text: "prefer<u>s</u>", raw: "prefers" }
+        ],
+        correct: "A",
+        explanation: {
+          translation: "Chọn từ có phần gạch chân được phát âm khác với ba từ còn lại.",
+          cards: [
+            { word: "supports", isCorrect: true, badgeText: "/s/", badgeType: "badge-correct", meaning: "= ủng hộ, hỗ trợ (/səˈpɔːts/)" },
+            { word: "earns", isCorrect: false, badgeText: "/z/", badgeType: "badge-structure", meaning: "= kiếm tiền (/ɜːnz/)" },
+            { word: "divides", isCorrect: false, badgeText: "/z/", badgeType: "badge-structure", meaning: "= phân chia (/dɪˈvaɪdz/)" },
+            { word: "prefers", isCorrect: false, badgeText: "/z/", badgeType: "badge-structure", meaning: "= thích hơn (/prɪˈfɜːz/)" }
+          ],
+          whyCorrect: { ruleTitle: "Quy tắc phát âm đuôi -s/-es", detail: "Từ <span class='exp-highlight-green'>supports</span> tận cùng bằng phụ âm vô thanh /t/ (trong nhóm /p, t, k, f, θ/) nên đuôi '-s' được phát âm là <span class='exp-highlight-green'>/s/</span>. Ba từ còn lại kết thúc bằng âm hữu thanh (/n/, /d/, /ɜː/) nên đuôi '-s' phát âm là /z/." },
+          whyWrong: [
+            { word: "earns", reason: "kết thúc bằng âm hữu thanh /n/ nên 's' đọc là /z/." },
+            { word: "divides", reason: "kết thúc bằng âm hữu thanh /d/ nên 's' đọc là /z/." },
+            { word: "prefers", reason: "kết thúc bằng nguyên âm dài /ɜː/ nên 's' đọc là /z/." }
+          ]
+        }
+      },
+      {
+        id: 3,
+        exTitle: "I. PHẦN TRẮC NGHIỆM - Mark the letter A, B, C or D to indicate the correct answer to each of the following questions.",
+        question: "Question 3: He quickly ________ his toys and puts them away before bedtime.",
+        options: [
+          { key: "A", text: "cheers up", raw: "cheers up" },
+          { key: "B", text: "grows up", raw: "grows up" },
+          { key: "C", text: "picks up", raw: "picks up" },
+          { key: "D", text: "look after", raw: "look after" }
+        ],
+        correct: "C",
+        explanation: {
+          translation: "Cậu bé nhanh chóng nhặt/thu dọn đồ chơi của mình và cất chúng đi trước giờ đi ngủ.",
+          cards: [
+            { word: "cheers up", isCorrect: false, badgeText: "phrasal verb", badgeType: "badge-structure", meaning: "= làm cho vui lên, phấn chấn lên" },
+            { word: "grows up", isCorrect: false, badgeText: "phrasal verb", badgeType: "badge-structure", meaning: "= lớn lên, trưởng thành" },
+            { word: "picks up", isCorrect: true, badgeText: "phrasal verb chuẩn", badgeType: "badge-correct", meaning: "= nhặt lên, thu dọn (pick up toys)" },
+            { word: "look after", isCorrect: false, badgeText: "sai ngữ pháp & nghĩa", badgeType: "badge-wrong", meaning: "= chăm sóc (chưa chia ngôi thứ 3 số ít)" }
+          ],
+          whyCorrect: { ruleTitle: "Cụm động từ dọn dẹp đồ đạc", detail: "Hành động đi kèm với 'puts them away' (cất đồ chơi vào chỗ cũ) là nhặt/thu gom đồ chơi lại: <span class='exp-highlight-green'>picks up his toys</span>." },
+          whyWrong: [
+            { word: "cheers up", reason: "cổ vũ tinh thần, không đi với đồ chơi." },
+            { word: "grows up", reason: "tự lớn lên (nội động từ)." },
+            { word: "look after", reason: "vừa sai nghĩa vừa chưa thêm -s theo chủ ngữ He." }
+          ]
+        }
+      },
+      {
+        id: 4,
+        exTitle: "I. PHẦN TRẮC NGHIỆM - Mark the letter A, B, C or D to indicate the correct answer to each of the following questions.",
+        question: "Question 4: They have plenty of ________ to enjoy games and outdoor activities on Sundays.",
+        options: [
+          { key: "A", text: "value", raw: "value" },
+          { key: "B", text: "housework", raw: "housework" },
+          { key: "C", text: "gratitude", raw: "gratitude" },
+          { key: "D", text: "playtime", raw: "playtime" }
+        ],
+        correct: "D",
+        explanation: {
+          translation: "Họ có rất nhiều thời gian vui chơi để tận hưởng các trò chơi và hoạt động ngoài trời vào các ngày Chủ nhật.",
+          cards: [
+            { word: "value", isCorrect: false, badgeText: "danh từ", badgeType: "badge-structure", meaning: "= giá trị" },
+            { word: "housework", isCorrect: false, badgeText: "danh từ", badgeType: "badge-structure", meaning: "= công việc nhà" },
+            { word: "gratitude", isCorrect: false, badgeText: "danh từ", badgeType: "badge-structure", meaning: "= lòng biết ơn" },
+            { word: "playtime", isCorrect: true, badgeText: "danh từ chuẩn", badgeType: "badge-correct", meaning: "= thời gian vui chơi, giải trí" }
+          ],
+          whyCorrect: { ruleTitle: "Từ vựng phù hợp ngữ cảnh", detail: "Để 'enjoy games and outdoor activities' (tận hưởng trò chơi và hoạt động ngoài trời) vào Chủ nhật, thứ họ có nhiều chính là <span class='exp-highlight-green'>playtime</span> (thời gian vui chơi)." },
+          whyWrong: [
+            { word: "value", reason: "giá trị không phù hợp ngữ cảnh đi chơi." },
+            { word: "housework", reason: "có nhiều việc nhà thì không thể rảnh chơi game ngoài trời." },
+            { word: "gratitude", reason: "lòng biết ơn không hợp nghĩa." }
+          ]
+        }
+      },
+      {
+        id: 5,
+        exTitle: "I. PHẦN TRẮC NGHIỆM - Mark the letter A, B, C or D to indicate the correct answer to each of the following questions.",
+        question: "Question 5: My parents ________ away on business, so now my grandmother ________ us.",
+        options: [
+          { key: "A", text: "is/ looks after", raw: "is/ looks after" },
+          { key: "B", text: "are/ looks after", raw: "are/ looks after" },
+          { key: "C", text: "are/ is looking after", raw: "are/ is looking after" },
+          { key: "D", text: "are/ are looking after", raw: "are/ are looking after" }
+        ],
+        correct: "C",
+        explanation: {
+          translation: "Bố mẹ tôi đang đi công tác xa, vì vậy hiện giờ bà của tôi đang trông nom chúng tôi.",
+          cards: [
+            { word: "is/ looks after", isCorrect: false, badgeText: "sai to be", badgeType: "badge-wrong", meaning: "= parents số nhiều không dùng 'is'" },
+            { word: "are/ looks after", isCorrect: false, badgeText: "sai vế 2", badgeType: "badge-wrong", meaning: "= có trạng từ 'now' phải chia tiếp diễn" },
+            { word: "are/ is looking after", isCorrect: true, badgeText: "chuẩn ngữ pháp", badgeType: "badge-correct", meaning: "= parents ARE away, now grandmother IS LOOKING after" },
+            { word: "are/ are looking after", isCorrect: false, badgeText: "sai vế 2", badgeType: "badge-wrong", meaning: "= grandmother số ít không dùng 'are'" }
+          ],
+          whyCorrect: { ruleTitle: "Sự hòa hợp chủ ngữ - động từ & Thì Hiện tại tiếp diễn", detail: "1. Vế đầu: 'My parents' (số nhiều) → dùng <span class='exp-highlight-green'>are</span> (be away on business: đi công tác).<br>2. Vế sau: Có dấu hiệu <span class='exp-highlight-green'>'now'</span> diễn tả hành động tạm thời đang diễn ra ở hiện tại, chủ ngữ 'my grandmother' (số ít) → <span class='exp-highlight-green'>is looking after</span>." },
+          whyWrong: [
+            { word: "A", reason: "parents là số nhiều nên dùng 'is' là sai." },
+            { word: "B", reason: "vế sau có 'now' chỉ hành động tạm thời lúc bố mẹ vắng nhà nên phải dùng hiện tại tiếp diễn." },
+            { word: "D", reason: "grandmother là ngôi thứ 3 số ít nên không dùng 'are'." }
+          ]
+        }
+      },
+      {
+        id: 6,
+        exTitle: "I. PHẦN TRẮC NGHIỆM - Mark the letter A, B, C or D to indicate the correct answer to each of the following questions.",
+        question: "Question 6: My dad ________ money as a breadwinner while my mom ________ most of the housework as a housewife.",
+        options: [
+          { key: "A", text: "earns/ is doing", raw: "earns/ is doing" },
+          { key: "B", text: "is earning/ does", raw: "is earning/ does" },
+          { key: "C", text: "is earning/ is doing", raw: "is earning/ is doing" },
+          { key: "D", text: "earns/ does", raw: "earns/ does" }
+        ],
+        correct: "D",
+        explanation: {
+          translation: "Bố tôi kiếm tiền với vai trò là trụ cột gia đình trong khi mẹ tôi làm hầu hết công việc nhà với vai trò là người nội trợ.",
+          cards: [
+            { word: "earns/ is doing", isCorrect: false, badgeText: "lệch thì", badgeType: "badge-wrong", meaning: "= không đồng nhất thì giữa 2 vế" },
+            { word: "is earning/ does", isCorrect: false, badgeText: "lệch thì", badgeType: "badge-wrong", meaning: "= vai trò lâu dài trong gia đình không chia tiếp diễn" },
+            { word: "is earning/ is doing", isCorrect: false, badgeText: "sai bản chất thì", badgeType: "badge-wrong", meaning: "= đây là sự thật/vai trò thường xuyên, không phải nhất thời" },
+            { word: "earns/ does", isCorrect: true, badgeText: "chuẩn hiện tại đơn", badgeType: "badge-correct", meaning: "= diễn tả vai trò, công việc cố định hàng ngày của bố và mẹ" }
+          ],
+          whyCorrect: { ruleTitle: "Thì Hiện tại đơn diễn tả công việc/vai trò thường xuyên", detail: "Câu văn mô tả sự phân công vai trò cố định lâu dài trong gia đình (bố là trụ cột kiếm tiền, mẹ là nội trợ làm việc nhà) → Cả 2 vế đều chia ở thì Hiện tại đơn ngôi thứ 3 số ít: <span class='exp-highlight-green'>earns / does</span>." },
+          whyWrong: [
+            { word: "A, B, C", reason: "thì hiện tại tiếp diễn chỉ dùng cho hành động đang diễn ra ngay lúc nói hoặc mang tính tạm thời." }
+          ]
+        }
+      },
+      {
+        id: 7,
+        exTitle: "I. PHẦN TRẮC NGHIỆM - Mark the letter A, B, C or D to indicate the correct answer to each of the following questions.",
+        question: "Question 7: I am so proud ________ what I have done to support my parents.",
+        options: [
+          { key: "A", text: "with", raw: "with" },
+          { key: "B", text: "for", raw: "for" },
+          { key: "C", text: "of", raw: "of" },
+          { key: "D", text: "to", raw: "to" }
+        ],
+        correct: "C",
+        explanation: {
+          translation: "Tôi rất tự hào về những gì mình đã làm để đỡ đần bố mẹ.",
+          cards: [
+            { word: "with", isCorrect: false, badgeText: "sai giới từ", badgeType: "badge-wrong", meaning: "= không đi với proud" },
+            { word: "for", isCorrect: false, badgeText: "sai giới từ", badgeType: "badge-wrong", meaning: "= không đi với proud" },
+            { word: "of", isCorrect: true, badgeText: "cấu trúc chuẩn", badgeType: "badge-correct", meaning: "= be proud of (tự hào về ai/điều gì)" },
+            { word: "to", isCorrect: false, badgeText: "chỉ đi với V", badgeType: "badge-wrong", meaning: "= proud to V (đằng sau là mệnh đề danh từ what...)" }
+          ],
+          whyCorrect: { ruleTitle: "Giới từ đi kèm tính từ Proud", detail: "Cấu trúc cố định: <span class='exp-highlight-green'>be proud of sb/sth</span> (tự hào về ai hoặc về điều gì)." },
+          whyWrong: [
+            { word: "with, for", reason: "không kết hợp với tính từ proud." },
+            { word: "to", reason: "chỉ dùng trong 'proud to do sth', còn trước danh từ/mệnh đề 'what...' phải dùng 'of'." }
+          ]
+        }
+      },
+      {
+        id: 8,
+        exTitle: "I. PHẦN TRẮC NGHIỆM - Mark the letter A, B, C or D to indicate the correct answer to each of the following questions.",
+        question: "Question 8: Spending quality time together helps build strong family ________ and create lasting memories.",
+        options: [
+          { key: "A", text: "experiences", raw: "experiences" },
+          { key: "B", text: "bonds", raw: "bonds" },
+          { key: "C", text: "success", raw: "success" },
+          { key: "D", text: "respect", raw: "respect" }
+        ],
+        correct: "B",
+        explanation: {
+          translation: "Dành thời gian chất lượng bên nhau giúp xây dựng sự gắn kết gia đình bền chặt và tạo nên những kỷ niệm lâu dài.",
+          cards: [
+            { word: "experiences", isCorrect: false, badgeText: "danh từ", badgeType: "badge-structure", meaning: "= những trải nghiệm" },
+            { word: "bonds", isCorrect: true, badgeText: "collocation chuẩn", badgeType: "badge-correct", meaning: "= mối gắn kết (strong family bonds)" },
+            { word: "success", isCorrect: false, badgeText: "danh từ", badgeType: "badge-structure", meaning: "= sự thành công" },
+            { word: "respect", isCorrect: false, badgeText: "danh từ", badgeType: "badge-structure", meaning: "= sự tôn trọng" }
+          ],
+          whyCorrect: { ruleTitle: "Cụm từ cố định (Collocation) chủ đề Gia đình", detail: "Cụm từ trọng tâm Unit 1: <span class='exp-highlight-green'>build strong family bonds</span> (xây dựng sợi dây gắn kết tình cảm gia đình bền chặt)." },
+          whyWrong: [
+            { word: "experiences", reason: "không dùng 'build strong family experiences'." },
+            { word: "success", reason: "không phù hợp ngữ cảnh tình cảm gia đình." },
+            { word: "respect", reason: "thường dùng 'show respect to sb' chứ không dùng 'build strong family respect'." }
+          ]
+        }
+      },
+
+      // SẮP XẾP HỘI THOẠI, ĐOẠN VĂN, THƯ (Câu 9 - 11)
+      {
+        id: 9,
+        exTitle: "I. PHẦN TRẮC NGHIỆM - Mark the letter A, B, C, or D on your answer sheet to indicate the correct arrangement of the sentences to make a meaningful paragraph/letter.",
+        question: "Question 9: Arrange the sentences into a meaningful conversation:<br><b>a. Jack:</b> That's great! Helping with chores shows respect and builds strong family bonds.<br><b>b. Lucy:</b> Yes, I often do the laundry and tidy up the kitchen. My parents really appreciate it.<br><b>c. Jack:</b> Hey Lucy, do you help your parents with the household chores?",
+        options: [
+          { key: "A", text: "c - a - b", raw: "c - a - b" },
+          { key: "B", text: "b - a - c", raw: "b - a - c" },
+          { key: "C", text: "c - b - a", raw: "c - b - a" },
+          { key: "D", text: "b - c - a", raw: "b - c - a" }
+        ],
+        correct: "C",
+        explanation: {
+          translation: "Sắp xếp đoạn hội thoại:<br><b>c. Jack:</b> Này Lucy, cậu có giúp bố mẹ làm việc nhà không?<br><b>b. Lucy:</b> Có chứ, tớ thường giặt đồ và dọn dẹp nhà bếp. Bố mẹ tớ rất trân trọng điều đó.<br><b>a. Jack:</b> Tuyệt quá! Giúp làm việc nhà thể hiện sự tôn trọng và xây dựng tình cảm gia đình bền chặt.",
+          cards: [
+            { word: "c-a-b", isCorrect: false, badgeText: "sai mạch", badgeType: "badge-wrong", meaning: "= Jack tự hỏi rồi tự khen 'That's great!' trước khi Lucy trả lời" },
+            { word: "b-a-c", isCorrect: false, badgeText: "sai mở đầu", badgeType: "badge-wrong", meaning: "= không mở đầu bằng 'Yes, I often...'" },
+            { word: "c-b-a", isCorrect: true, badgeText: "chuẩn xác 100%", badgeType: "badge-correct", meaning: "= Jack đặt câu hỏi (c) -> Lucy trả lời 'Yes...' (b) -> Jack khen ngợi (a)" },
+            { word: "b-c-a", isCorrect: false, badgeText: "sai mở đầu", badgeType: "badge-wrong", meaning: "= trả lời Yes trước khi được hỏi" }
+          ],
+          whyCorrect: { ruleTitle: "Trật tự Hỏi - Đáp - Phản hồi", detail: "Jack mở lời chào và đặt câu hỏi Yes/No (c) → Lucy trả lời 'Yes' và kể các việc nhà thường làm (b) → Jack khen ngợi 'That's great!' và nêu ý nghĩa (a): <span class='exp-highlight-green'>c - b - a</span>." },
+          whyWrong: [
+            { word: "c-a-b", reason: "Jack không thể nói 'That's great!' khi Lucy chưa trả lời." },
+            { word: "b-a-c, b-c-a", reason: "câu (b) bắt đầu bằng 'Yes' nên không thể đứng đầu hội thoại." }
+          ]
+        }
+      },
+      {
+        id: 10,
+        exTitle: "I. PHẦN TRẮC NGHIỆM - Mark the letter A, B, C, or D on your answer sheet to indicate the correct arrangement of the sentences to make a meaningful paragraph/letter.",
+        question: "Question 10: Arrange the sentences into a meaningful paragraph:<br><b>a.</b> Firstly, we should clean up all areas regularly. For example, we can organise clean-up activities at weekends.<br><b>b.</b> There are three things we can do to improve the environment in our school.<br><b>c.</b> Secondly, we ought to set up more rubbish bins. For instance, we can put more rubbish bins in the school gate, in front of each building, or in the playground.<br><b>d.</b> In conclusion, we can improve the environment in our school in many ways and even small actions can make a big difference.<br><b>e.</b> Finally, we should plant more trees. To give an example, we can encourage students to plant trees or flowers in our school because this reduces CO2 and makes the air clean.",
+        options: [
+          { key: "A", text: "e - a - d - b - c", raw: "e - a - d - b - c" },
+          { key: "B", text: "e - b - a - d - c", raw: "e - b - a - d - c" },
+          { key: "C", text: "e - b - a - c - d", raw: "e - b - a - c - d" },
+          { key: "D", text: "b - a - c - e - d", raw: "b - a - c - e - d" }
+        ],
+        correct: "D",
+        explanation: {
+          translation: "Sắp xếp đoạn văn:<br><b>b.</b> Có ba điều chúng ta có thể làm để cải thiện môi trường trong trường học.<br><b>a.</b> Thứ nhất, chúng ta nên dọn dẹp tất cả các khu vực thường xuyên...<br><b>c.</b> Thứ hai, chúng ta nên đặt thêm nhiều thùng rác...<br><b>e.</b> Cuối cùng, chúng ta nên trồng thêm cây xanh...<br><b>d.</b> Tóm lại, chúng ta có thể cải thiện môi trường trường học bằng nhiều cách...",
+          cards: [
+            { word: "e-a-d-b-c", isCorrect: false, badgeText: "sai mở đầu", badgeType: "badge-wrong", meaning: "= mở đầu bằng 'Finally' là sai" },
+            { word: "e-b-a-d-c", isCorrect: false, badgeText: "sai mở đầu", badgeType: "badge-wrong", meaning: "= không mở đầu bằng 'Finally'" },
+            { word: "e-b-a-c-d", isCorrect: false, badgeText: "sai mở đầu", badgeType: "badge-wrong", meaning: "= Finally không thể đứng đầu đoạn" },
+            { word: "b-a-c-e-d", isCorrect: true, badgeText: "chuẩn logic 100%", badgeType: "badge-correct", meaning: "= Câu chủ đề (b) -> Firstly (a) -> Secondly (c) -> Finally (e) -> In conclusion (d)" }
+          ],
+          whyCorrect: { ruleTitle: "Trật tự từ nối liệt kê luận điểm", detail: "Mở đoạn bằng câu chủ đề (b: There are three things...) → Luận điểm 1: <span class='exp-highlight-green'>Firstly (a)</span> → Luận điểm 2: <span class='exp-highlight-green'>Secondly (c)</span> → Luận điểm 3: <span class='exp-highlight-green'>Finally (e)</span> → Kết đoạn: <span class='exp-highlight-green'>In conclusion (d)</span>: <span class='exp-highlight-green'>b - a - c - e - d</span>." },
+          whyWrong: [
+            { word: "A, B, C", reason: "cả 3 phương án đều đặt câu (e: Finally...) lên đầu đoạn văn nên sai hoàn toàn về mặt mạch lạc." }
+          ]
+        }
+      },
+      {
+        id: 11,
+        exTitle: "I. PHẦN TRẮC NGHIỆM - Mark the letter A, B, C, or D on your answer sheet to indicate the correct arrangement of the sentences to make a meaningful paragraph/letter.",
+        question: "Question 11: Arrange the sentences into a meaningful application letter:<br><b>a.</b> I am writing to apply for a volunteer position at the head office. I heard the announcement about this position on radio last Sunday.<br><b>b.</b> I am available for an interview on any weekday from 8.00 am to 11.00 am. If my application is successful, I can start on 15th January 2022.<br><b>c.</b> I am interested in the job duties at the head office. I want to help you welcome guests and visitors to the office and receive and sort donations.<br><b>d.</b> Yours faithfully,<br><b>e.</b> I look forward to hearing from you.<br><b>f.</b> Dear Sir or Madam,",
+        options: [
+          { key: "A", text: "e - b - a - c - f - d", raw: "e - b - a - c - f - d" },
+          { key: "B", text: "e - c - f - d - b - a", raw: "e - c - f - d - b - a" },
+          { key: "C", text: "b - c - d - e - a - f", raw: "b - c - d - e - a - f" },
+          { key: "D", text: "f - a - c - b - e - d", raw: "f - a - c - b - e - d" }
+        ],
+        correct: "D",
+        explanation: {
+          translation: "Sắp xếp lá thư xin làm tình nguyện viên:<br><b>f.</b> Kính gửi Ông/Bà,<br><b>a.</b> Tôi viết thư này để ứng tuyển vào vị trí tình nguyện viên tại trụ sở chính...<br><b>c.</b> Tôi rất quan tâm đến các công việc tại trụ sở. Tôi muốn giúp đón tiếp khách và phân loại đồ quyên góp.<br><b>b.</b> Tôi có thể tham gia phỏng vấn vào bất kỳ ngày làm việc nào trong tuần từ 8h đến 11h sáng...<br><b>e.</b> Tôi rất mong nhận được phản hồi từ Ông/Bà.<br><b>d.</b> Trân trọng,",
+          cards: [
+            { word: "e-b-a-c-f-d", isCorrect: false, badgeText: "sai mở thư", badgeType: "badge-wrong", meaning: "= lời chào 'Dear Sir or Madam' (f) bị đẩy xuống cuối" },
+            { word: "e-c-f-d-b-a", isCorrect: false, badgeText: "sai cấu trúc thư", badgeType: "badge-wrong", meaning: "= xáo trộn toàn bộ bố cục thư trang trọng" },
+            { word: "b-c-d-e-a-f", isCorrect: false, badgeText: "sai mở thư", badgeType: "badge-wrong", meaning: "= đặt lời chào (f) ở cuối cùng" },
+            { word: "f-a-c-b-e-d", isCorrect: true, badgeText: "chuẩn bố cục thư", badgeType: "badge-correct", meaning: "= Lời chào (f) -> Lý do viết thư (a) -> Mối quan tâm (c) -> Lịch phỏng vấn (b) -> Mong phản hồi (e) -> Ký tên (d)" }
+          ],
+          whyCorrect: { ruleTitle: "Bố cục chuẩn của một bức thư xin việc (Application Letter)", detail: "Mở đầu bằng lời chào trang trọng <span class='exp-highlight-green'>Dear Sir or Madam (f)</span> → Nêu mục đích viết thư ứng tuyển (a) → Nêu sự quan tâm tới nhiệm vụ công việc (c) → Nêu thời gian rảnh phỏng vấn và ngày có thể bắt đầu (b) → Câu kết mong nhận hồi âm (e) → Lời chào kết thư <span class='exp-highlight-green'>Yours faithfully (d)</span>: <span class='exp-highlight-green'>f - a - c - b - e - d</span>." },
+          whyWrong: [
+            { word: "A, B, C", reason: "không đặt lời chào mở đầu 'Dear Sir or Madam' (f) ở vị trí đầu tiên." }
+          ]
+        }
+      },
+
+      // TỪ ĐỒNG NGHĨA & TRÁI NGHĨA (Câu 12 - 15)
+      {
+        id: 12,
+        exTitle: "I. PHẦN TRẮC NGHIỆM - Mark the letter A, B, C or D to indicate the word(s) CLOSEST in meaning to the underlined word(s).",
+        question: "Question 12: We always <u>split</u> the housework equally - my mom cooks, my dad cleans the house and I do the washing-up.",
+        options: [
+          { key: "A", text: "join", raw: "join" },
+          { key: "B", text: "break", raw: "break" },
+          { key: "C", text: "share", raw: "share" },
+          { key: "D", text: "pick up", raw: "pick up" }
+        ],
+        correct: "C",
+        explanation: {
+          translation: "Chúng tôi luôn phân chia công việc nhà một cách công bằng - mẹ tôi nấu ăn, bố tôi lau dọn nhà cửa và tôi rửa bát.",
+          cards: [
+            { word: "join", isCorrect: false, badgeText: "động từ", badgeType: "badge-structure", meaning: "= tham gia vào" },
+            { word: "break", isCorrect: false, badgeText: "động từ", badgeType: "badge-structure", meaning: "= làm vỡ, làm gãy" },
+            { word: "share", isCorrect: true, badgeText: "đồng nghĩa chuẩn", badgeType: "badge-correct", meaning: "= chia sẻ, phân chia (= split / divide)" },
+            { word: "pick up", isCorrect: false, badgeText: "phrasal verb", badgeType: "badge-structure", meaning: "= nhặt lên, đón ai" }
+          ],
+          whyCorrect: { ruleTitle: "Từ đồng nghĩa trong chủ đề phân công việc nhà", detail: "<span class='exp-highlight-green'>split the housework equally</span> = <span class='exp-highlight-green'>share / divide the housework equally</span> (cùng nhau chia sẻ, phân chia việc nhà đồng đều)." },
+          whyWrong: [
+            { word: "join", reason: "mang nghĩa gia nhập một câu lạc bộ/tổ chức." },
+            { word: "break", reason: "mang nghĩa đập vỡ đồ vật." },
+            { word: "pick up", reason: "mang nghĩa nhặt đồ hoặc đón xe." }
+          ]
+        }
+      },
+      {
+        id: 13,
+        exTitle: "I. PHẦN TRẮC NGHIỆM - Mark the letter A, B, C or D to indicate the word(s) CLOSEST in meaning to the underlined word(s).",
+        question: "Question 13: It is advisable that everyone in family shares the household <u>duties</u>.",
+        options: [
+          { key: "A", text: "views", raw: "views" },
+          { key: "B", text: "ideas", raw: "ideas" },
+          { key: "C", text: "jobs", raw: "jobs" },
+          { key: "D", text: "chores", raw: "chores" }
+        ],
+        correct: "D",
+        explanation: {
+          translation: "Mọi người trong gia đình nên cùng nhau chia sẻ các công việc/bổn phận nội trợ.",
+          cards: [
+            { word: "views", isCorrect: false, badgeText: "danh từ", badgeType: "badge-structure", meaning: "= quan điểm, tầm nhìn" },
+            { word: "ideas", isCorrect: false, badgeText: "danh từ", badgeType: "badge-structure", meaning: "= ý tưởng" },
+            { word: "jobs", isCorrect: false, badgeText: "nghề nghiệp", badgeType: "badge-structure", meaning: "= nghề nghiệp kiếm sống ngoài xã hội" },
+            { word: "chores", isCorrect: true, badgeText: "đồng nghĩa chuẩn", badgeType: "badge-correct", meaning: "= việc vặt trong nhà (household chores = household duties)" }
+          ],
+          whyCorrect: { ruleTitle: "Cụm danh từ Công việc nhà", detail: "<span class='exp-highlight-green'>household duties</span> đồng nghĩa trực tiếp với <span class='exp-highlight-green'>household chores</span> (các công việc lặt vặt thường nhật trong gia đình)." },
+          whyWrong: [
+            { word: "views", reason: "nghĩa là góc nhìn, quan điểm." },
+            { word: "ideas", reason: "nghĩa là sáng kiến, ý nghĩ." },
+            { word: "jobs", reason: "chỉ công việc làm ăn có lương." }
+          ]
+        }
+      },
+      {
+        id: 14,
+        exTitle: "I. PHẦN TRẮC NGHIỆM - Mark the letter A, B, C or D to indicate the word(s) OPPOSITE in meaning to the underlined word(s).",
+        question: "Question 14: Parents should <u>encourage</u> their children to share the housework for the goodness of the whole family.",
+        options: [
+          { key: "A", text: "support", raw: "support" },
+          { key: "B", text: "motivate", raw: "motivate" },
+          { key: "C", text: "inspire", raw: "inspire" },
+          { key: "D", text: "prevent", raw: "prevent" }
+        ],
+        correct: "D",
+        explanation: {
+          translation: "Cha mẹ nên khuyến khích con cái chia sẻ công việc nhà vì lợi ích của cả gia đình.",
+          cards: [
+            { word: "support", isCorrect: false, badgeText: "đồng nghĩa", badgeType: "badge-wrong", meaning: "= ủng hộ, hỗ trợ" },
+            { word: "motivate", isCorrect: false, badgeText: "đồng nghĩa", badgeType: "badge-wrong", meaning: "= thúc đẩy, tạo động lực" },
+            { word: "inspire", isCorrect: false, badgeText: "đồng nghĩa", badgeType: "badge-wrong", meaning: "= truyền cảm hứng" },
+            { word: "prevent", isCorrect: true, badgeText: "trái nghĩa chuẩn", badgeType: "badge-correct", meaning: "= ngăn cản, cản trở (<> encourage khuyến khích)" }
+          ],
+          whyCorrect: { ruleTitle: "Cặp động từ Khuyến khích - Ngăn cản", detail: "<span class='exp-highlight-green'>encourage</span> (khuyến khích, động viên ai làm gì) trái nghĩa hoàn toàn với <span class='exp-highlight-green'>prevent / discourage</span> (ngăn cản ai làm gì)." },
+          whyWrong: [
+            { word: "support, motivate, inspire", reason: "cả 3 từ này đều mang nghĩa tích cực gần nghĩa với encourage." }
+          ]
+        }
+      },
+      {
+        id: 15,
+        exTitle: "I. PHẦN TRẮC NGHIỆM - Mark the letter A, B, C or D to indicate the word(s) OPPOSITE in meaning to the underlined word(s).",
+        question: "Question 15: In my family, my father always takes charge of doing the <u>heavy</u> lifting.",
+        options: [
+          { key: "A", text: "strong", raw: "strong" },
+          { key: "B", text: "hard", raw: "hard" },
+          { key: "C", text: "light", raw: "light" },
+          { key: "D", text: "huge", raw: "huge" }
+        ],
+        correct: "C",
+        explanation: {
+          translation: "Trong gia đình tôi, bố tôi luôn đảm nhận việc mang vác các đồ vật nặng nhọc.",
+          cards: [
+            { word: "strong", isCorrect: false, badgeText: "tính từ", badgeType: "badge-structure", meaning: "= khỏe mạnh, bền chắc" },
+            { word: "hard", isCorrect: false, badgeText: "gần nghĩa", badgeType: "badge-wrong", meaning: "= vất vả, cực nhọc" },
+            { word: "light", isCorrect: true, badgeText: "trái nghĩa chuẩn", badgeType: "badge-correct", meaning: "= nhẹ nhàng (<> heavy nặng nhọc)" },
+            { word: "huge", isCorrect: false, badgeText: "tính từ", badgeType: "badge-structure", meaning: "= khổng lồ, to lớn" }
+          ],
+          whyCorrect: { ruleTitle: "Cặp tính từ Nặng - Nhẹ", detail: "<span class='exp-highlight-green'>heavy</span> (nặng nề, nặng nhọc) trái nghĩa trực tiếp với <span class='exp-highlight-green'>light</span> (nhẹ nhàng)." },
+          whyWrong: [
+            { word: "strong", reason: "trái nghĩa với weak (yếu)." },
+            { word: "hard", reason: "cùng trường nghĩa vất vả với heavy." },
+            { word: "huge", reason: "trái nghĩa với tiny (nhỏ xíu)." }
+          ]
+        }
+      },
+
+      // ĐỌC ĐIỀN THÔNG BÁO QUẢNG CÁO CÀ PHÊ (Câu 16 - 18)
+      {
+        id: 16,
+        exTitle: "I. PHẦN TRẮC NGHIỆM - Read the following advertisement/announcement and mark the letter A, B, C, or D to indicate the correct option that best fits each of the numbered blanks.",
+        question: "<div class='announcement-box'><div class='announcement-header'>☕ GIVE YOURSELF A COFFEE BREAK! ☕</div><p><b>THINK BETTER!</b><br>Stop working (16) ________ a while and take a cheerful cup of coffee. Your mind is clearer and solutions are nearer to you.<br><b>WORK BETTER!</b><br>Get ready for your work with (17) ________ fragrant cup of coffee. Its gentle stimulation is your cue for better work.<br><b>FEEL BETTER!</b><br>Stop getting tired with the kind of black or brown liquid known as coffee. As long as you take it, your boredom and (18) ________ will be gone.</p></div>Question 16: Stop working (16) ________ a while and take a cheerful cup of coffee.",
+        options: [
+          { key: "A", text: "for", raw: "for" },
+          { key: "B", text: "with", raw: "with" },
+          { key: "C", text: "at", raw: "at" },
+          { key: "D", text: "of", raw: "of" }
+        ],
+        correct: "A",
+        explanation: {
+          translation: "Hãy ngừng làm việc trong một lát và thưởng thức một tách cà phê vui vẻ.",
+          cards: [
+            { word: "for", isCorrect: true, badgeText: "cụm cố định", badgeType: "badge-correct", meaning: "= for a while (trong một khoảng thời gian ngắn, một lát)" },
+            { word: "with", isCorrect: false, badgeText: "sai giới từ", badgeType: "badge-wrong", meaning: "= không đi với a while" },
+            { word: "at", isCorrect: false, badgeText: "sai giới từ", badgeType: "badge-wrong", meaning: "= không đi với a while" },
+            { word: "of", isCorrect: false, badgeText: "sai giới từ", badgeType: "badge-wrong", meaning: "= không đi với a while" }
+          ],
+          whyCorrect: { ruleTitle: "Cụm giới từ chỉ khoảng thời gian", detail: "Cụm từ cố định chỉ khoảng thời gian ngắn: <span class='exp-highlight-green'>for a while</span> (trong một chốc, một lát)." },
+          whyWrong: [
+            { word: "with, at, of", reason: "không kết hợp với 'a while' để chỉ khoảng thời gian." }
+          ]
+        }
+      },
+      {
+        id: 17,
+        exTitle: "I. PHẦN TRẮC NGHIỆM - Read the following advertisement/announcement and mark the letter A, B, C, or D to indicate the correct option that best fits each of the numbered blanks.",
+        question: "Question 17: Get ready for your work with (17) ________ fragrant cup of coffee.",
+        options: [
+          { key: "A", text: "the", raw: "the" },
+          { key: "B", text: "an", raw: "an" },
+          { key: "C", text: "a", raw: "a" },
+          { key: "D", text: "no article", raw: "no article" }
+        ],
+        correct: "C",
+        explanation: {
+          translation: "Hãy sẵn sàng cho công việc của bạn với một tách cà phê thơm lừng.",
+          cards: [
+            { word: "the", isCorrect: false, badgeText: "xác định", badgeType: "badge-wrong", meaning: "= tách cà phê chưa xác định cụ thể" },
+            { word: "an", isCorrect: false, badgeText: "sai âm đầu", badgeType: "badge-wrong", meaning: "= 'fragrant' bắt đầu bằng phụ âm /f/" },
+            { word: "a", isCorrect: true, badgeText: "mạo từ chuẩn", badgeType: "badge-correct", meaning: "= a fragrant cup of coffee (một tách cà phê thơm)" },
+            { word: "no article", isCorrect: false, badgeText: "thiếu mạo từ", badgeType: "badge-wrong", meaning: "= 'cup' là danh từ đếm được số ít" }
+          ],
+          whyCorrect: { ruleTitle: "Mạo từ trước danh từ đếm được số ít", detail: "Danh từ chính là 'cup' (tách - đếm được số ít), đứng trước là tính từ 'fragrant' bắt đầu bằng phụ âm /f/ → Dùng mạo từ <span class='exp-highlight-green'>a</span>." },
+          whyWrong: [
+            { word: "the", reason: "nhắc tới một tách cà phê bất kỳ nói chung." },
+            { word: "an", reason: "chỉ đứng trước nguyên âm." },
+            { word: "no article", reason: "danh từ đếm được số ít bắt buộc có mạo từ." }
+          ]
+        }
+      },
+      {
+        id: 18,
+        exTitle: "I. PHẦN TRẮC NGHIỆM - Read the following advertisement/announcement and mark the letter A, B, C, or D to indicate the correct option that best fits each of the numbered blanks.",
+        question: "Question 18: As long as you take it, your boredom and (18) ________ will be gone.",
+        options: [
+          { key: "A", text: "disappoint", raw: "disappoint" },
+          { key: "B", text: "disappointedly", raw: "disappointedly" },
+          { key: "C", text: "disappointment", raw: "disappointment" },
+          { key: "D", text: "disappointed", raw: "disappointed" }
+        ],
+        correct: "C",
+        explanation: {
+          translation: "Chỉ cần bạn thưởng thức nó, sự buồn chán và nỗi thất vọng của bạn sẽ tan biến.",
+          cards: [
+            { word: "disappoint", isCorrect: false, badgeText: "động từ", badgeType: "badge-wrong", meaning: "= làm thất vọng" },
+            { word: "disappointedly", isCorrect: false, badgeText: "trạng từ", badgeType: "badge-wrong", meaning: "= một cách thất vọng" },
+            { word: "disappointment", isCorrect: true, badgeText: "danh từ chuẩn", badgeType: "badge-correct", meaning: "= nỗi thất vọng (song hành với danh từ boredom)" },
+            { word: "disappointed", isCorrect: false, badgeText: "tính từ", badgeType: "badge-wrong", meaning: "= cảm thấy thất vọng" }
+          ],
+          whyCorrect: { ruleTitle: "Cấu trúc song hành (Parallel Structure)", detail: "Trước liên từ 'and' là cụm tính từ sở hữu + danh từ <span class='exp-highlight-green'>'your boredom'</span> (sự buồn chán của bạn), nên sau 'and' cũng bắt buộc là một danh từ làm chủ ngữ: <span class='exp-highlight-green'>disappointment</span>." },
+          whyWrong: [
+            { word: "A, B, D", reason: "động từ, trạng từ và tính từ không thể đứng làm chủ ngữ song hành với danh từ boredom." }
+          ]
+        }
+      },
+
+      // BÀI ĐỌC ĐIỀN TỪ VỀ LÀM VIỆC NHÀ Ở TRẺ EM (Câu 19 - 23)
+      {
+        id: 19,
+        exTitle: "I. PHẦN TRẮC NGHIỆM - Read the following passage and mark the letter A, B, C, or D to indicate the correct word or phrase that best fits each of the numbered blanks.",
+        question: "<div class='passage-box'>Children can learn a lot from doing household chores. Doing chores helps children learn about what they need to do to care (19) ________ themselves, a home and a family. They learn skills (20) ________ they can use in their adult lives like preparing meals, cleaning, organising and gardening. Being involved in chores also gives children experience of relationship skills like communicating clearly, negotiating, cooperating and working as (21) ________ team. And when children contribute to family life, they might feel competent and responsible. Even if they don't enjoy the chore, when they keep going, they can feel (22) ________ that they've finished the task. Sharing housework can also help families work better and reduce family stress. When children help out, chores get done sooner (23) ________ parents have less to do. This frees up time for the family to do fun things together.</div>Question 19: Doing chores helps children learn about what they need to do to care (19) ________ themselves, a home and a family.",
+        options: [
+          { key: "A", text: "on", raw: "on" },
+          { key: "B", text: "in", raw: "in" },
+          { key: "C", text: "of", raw: "of" },
+          { key: "D", text: "for", raw: "for" }
+        ],
+        correct: "D",
+        explanation: {
+          translation: "Làm việc nhà giúp trẻ học được những gì chúng cần làm để tự chăm sóc bản thân, tổ ấm và gia đình.",
+          cards: [
+            { word: "on", isCorrect: false, badgeText: "sai giới từ", badgeType: "badge-wrong", meaning: "= không đi với care" },
+            { word: "in", isCorrect: false, badgeText: "sai giới từ", badgeType: "badge-wrong", meaning: "= không đi với care" },
+            { word: "of", isCorrect: false, badgeText: "bẫy take care of", badgeType: "badge-wrong", meaning: "= chỉ dùng 'of' khi có 'take care of'" },
+            { word: "for", isCorrect: true, badgeText: "phrasal verb chuẩn", badgeType: "badge-correct", meaning: "= care for sb/sth (chăm sóc, lo lắng cho ai)" }
+          ],
+          whyCorrect: { ruleTitle: "Phân biệt Care for và Take care of", detail: "Khi dùng động từ 'care' độc lập mang nghĩa chăm sóc, ta dùng giới từ <span class='exp-highlight-green'>for</span>: <span class='exp-highlight-green'>care for sb</span> = take care of sb = look after sb." },
+          whyWrong: [
+            { word: "of", reason: "bẫy học sinh nhầm với cụm 'take care of', ở đây không có chữ 'take'." },
+            { word: "on, in", reason: "không đi với động từ care." }
+          ]
+        }
+      },
+      {
+        id: 20,
+        exTitle: "I. PHẦN TRẮC NGHIỆM - Read the following passage and mark the letter A, B, C, or D to indicate the correct word or phrase that best fits each of the numbered blanks.",
+        question: "Question 20: They learn skills (20) ________ they can use in their adult lives like preparing meals, cleaning, organising and gardening.",
+        options: [
+          { key: "A", text: "when", raw: "when" },
+          { key: "B", text: "which", raw: "which" },
+          { key: "C", text: "who", raw: "who" },
+          { key: "D", text: "where", raw: "where" }
+        ],
+        correct: "B",
+        explanation: {
+          translation: "Chúng học được những kỹ năng mà chúng có thể sử dụng trong cuộc sống trưởng thành như chuẩn bị bữa ăn, dọn dẹp, sắp xếp và làm vườn.",
+          cards: [
+            { word: "when", isCorrect: false, badgeText: "thời gian", badgeType: "badge-wrong", meaning: "= thay cho danh từ thời gian" },
+            { word: "which", isCorrect: true, badgeText: "đại từ quan hệ", badgeType: "badge-correct", meaning: "= thay thế cho danh từ chỉ vật 'skills'" },
+            { word: "who", isCorrect: false, badgeText: "chỉ người", badgeType: "badge-wrong", meaning: "= thay thế cho người" },
+            { word: "where", isCorrect: false, badgeText: "nơi chốn", badgeType: "badge-wrong", meaning: "= thay thế cho địa điểm" }
+          ],
+          whyCorrect: { ruleTitle: "Mệnh đề quan hệ bổ nghĩa cho danh từ chỉ vật", detail: "Danh từ đứng trước là <span class='exp-highlight-green'>'skills'</span> (những kỹ năng - chỉ sự vật), làm tân ngữ cho động từ 'use' → Dùng đại từ quan hệ <span class='exp-highlight-green'>which</span>." },
+          whyWrong: [
+            { word: "when, who, where", reason: "không thay thế cho danh từ chỉ vật 'skills'." }
+          ]
+        }
+      },
+      {
+        id: 21,
+        exTitle: "I. PHẦN TRẮC NGHIỆM - Read the following passage and mark the letter A, B, C, or D to indicate the correct word or phrase that best fits each of the numbered blanks.",
+        question: "Question 21: communicating clearly, negotiating, cooperating and working as (21) ________ team.",
+        options: [
+          { key: "A", text: "a", raw: "a" },
+          { key: "B", text: "any", raw: "any" },
+          { key: "C", text: "every", raw: "every" },
+          { key: "D", text: "some", raw: "some" }
+        ],
+        correct: "A",
+        explanation: {
+          translation: "giao tiếp rõ ràng, đàm phán, hợp tác và làm việc cùng nhau như một đội/nhóm.",
+          cards: [
+            { word: "a", isCorrect: true, badgeText: "cụm cố định", badgeType: "badge-correct", meaning: "= work as a team (làm việc nhóm)" },
+            { word: "any", isCorrect: false, badgeText: "bất kỳ", badgeType: "badge-wrong", meaning: "= không dùng trong cụm cố định này" },
+            { word: "every", isCorrect: false, badgeText: "mỗi", badgeType: "badge-wrong", meaning: "= không hợp ngữ cảnh" },
+            { word: "some", isCorrect: false, badgeText: "một vài", badgeType: "badge-wrong", meaning: "= thường đi với danh từ số nhiều" }
+          ],
+          whyCorrect: { ruleTitle: "Cụm từ cố định Work as a team", detail: "Cụm từ tiếng Anh quen thuộc: <span class='exp-highlight-green'>work as a team</span> (phối hợp làm việc như một tập thể/đội nhóm)." },
+          whyWrong: [
+            { word: "any, every, some", reason: "phá vỡ cấu trúc thành ngữ cố định 'work as a team'." }
+          ]
+        }
+      },
+      {
+        id: 22,
+        exTitle: "I. PHẦN TRẮC NGHIỆM - Read the following passage and mark the letter A, B, C, or D to indicate the correct word or phrase that best fits each of the numbered blanks.",
+        question: "Question 22: Even if they don't enjoy the chore, when they keep going, they can feel (22) ________ that they've finished the task.",
+        options: [
+          { key: "A", text: "satisfactory", raw: "satisfactory" },
+          { key: "B", text: "satisfied", raw: "satisfied" },
+          { key: "C", text: "satisfaction", raw: "satisfaction" },
+          { key: "D", text: "satisfy", raw: "satisfy" }
+        ],
+        correct: "B",
+        explanation: {
+          translation: "Ngay cả khi chúng không thích công việc nhà đó, khi chúng kiên trì làm tiếp, chúng có thể cảm thấy hài lòng vì đã hoàn thành nhiệm vụ.",
+          cards: [
+            { word: "satisfactory", isCorrect: false, badgeText: "tính từ chỉ vật", badgeType: "badge-wrong", meaning: "= đạt yêu cầu, thỏa đáng (dùng cho kết quả/vật)" },
+            { word: "satisfied", isCorrect: true, badgeText: "tính từ chỉ cảm xúc", badgeType: "badge-correct", meaning: "= cảm thấy hài lòng, thỏa mãn (dùng cho người)" },
+            { word: "satisfaction", isCorrect: false, badgeText: "danh từ", badgeType: "badge-wrong", meaning: "= sự hài lòng" },
+            { word: "satisfy", isCorrect: false, badgeText: "động từ", badgeType: "badge-wrong", meaning: "= làm hài lòng" }
+          ],
+          whyCorrect: { ruleTitle: "Tính từ đuôi -ed diễn tả cảm xúc con người sau động từ nối 'feel'", detail: "Sau động từ nối 'feel' cần một tính từ chỉ cảm xúc của chủ ngữ 'they' (children - con người) → Dùng tính từ phân từ <span class='exp-highlight-green'>satisfied</span> (cảm thấy hài lòng)." },
+          whyWrong: [
+            { word: "satisfactory", reason: "chỉ tính chất của sự vật/công việc đạt mức chấp nhận được." },
+            { word: "satisfaction", reason: "danh từ không đứng trực tiếp sau feel." },
+            { word: "satisfy", reason: "động từ nguyên mẫu không đứng sau feel." }
+          ]
+        }
+      },
+      {
+        id: 23,
+        exTitle: "I. PHẦN TRẮC NGHIỆM - Read the following passage and mark the letter A, B, C, or D to indicate the correct word or phrase that best fits each of the numbered blanks.",
+        question: "Question 23: When children help out, chores get done sooner (23) ________ parents have less to do.",
+        options: [
+          { key: "A", text: "because", raw: "because" },
+          { key: "B", text: "otherwise", raw: "otherwise" },
+          { key: "C", text: "and", raw: "and" },
+          { key: "D", text: "but", raw: "but" }
+        ],
+        correct: "C",
+        explanation: {
+          translation: "Khi con cái phụ giúp, công việc nhà được hoàn thành sớm hơn và cha mẹ cũng có ít việc phải làm hơn.",
+          cards: [
+            { word: "because", isCorrect: false, badgeText: "nguyên nhân", badgeType: "badge-wrong", meaning: "= bởi vì (không hợp logic nhân quả ở đây)" },
+            { word: "otherwise", isCorrect: false, badgeText: "nếu không thì", badgeType: "badge-wrong", meaning: "= nếu không thì" },
+            { word: "and", isCorrect: true, badgeText: "liên từ đẳng lập", badgeType: "badge-correct", meaning: "= và (nối 2 kết quả tích cực song song)" },
+            { word: "but", isCorrect: false, badgeText: "tương phản", badgeType: "badge-wrong", meaning: "= nhưng (2 vế không đối lập nhau)" }
+          ],
+          whyCorrect: { ruleTitle: "Liên từ nối hai mệnh đề đồng hướng", detail: "Khi trẻ phụ giúp, có 2 lợi ích đồng thời xảy ra: 'việc nhà xong sớm hơn' VÀ 'bố mẹ đỡ vất vả hơn' → Dùng liên từ <span class='exp-highlight-green'>and</span>." },
+          whyWrong: [
+            { word: "because", reason: "cha mẹ ít việc là kết quả chứ không phải nguyên nhân khiến việc xong sớm." },
+            { word: "otherwise, but", reason: "hai vế mang nghĩa tích cực bổ sung cho nhau, không tương phản." }
+          ]
+        }
+      },
+
+      // BÀI ĐỌC HIỂU CÁC LOẠI HÌNH GIA ĐÌNH (Câu 24 - 28)
+      {
+        id: 24,
+        exTitle: "I. PHẦN TRẮC NGHIỆM - Read the following passage and mark the letter A, B, C, or D to indicate the correct answer to each of the questions.",
+        question: "<div class='passage-box'>Family types vary in different countries and among different cultures. In Western, industrialized societies, the nuclear family ranks as the most common family type. It consists of a father, a mother and their children. But nuclear families exist together with many other types of family units. In the single-parent family, for example, a mother or a father heads the family alone. A <u>blended</u> family is formed when a divorced or widowed parent remarries. As divorce rates have risen, the number of single-parent and blended families has increased.<br><br>In many parts of the world, parents and children live together with other family members under the same roof. These complex families usually contain several generations of family members, including grandparents, parents and children. They may also include brothers or sisters and their families, uncles, aunts and cousins. Even when relatives do not live together, they still consider themselves members of the same extended family includes grandparents, uncles, aunts and cousins.</div>Question 24: The nuclear family ranks as the most common family type ________.",
+        options: [
+          { key: "A", text: "in many industrialized countries", raw: "in many industrialized countries" },
+          { key: "B", text: "in countries with nuclear weapons", raw: "in countries with nuclear weapons" },
+          { key: "C", text: "that consists of more than two generations", raw: "that consists of more than two generations" },
+          { key: "D", text: "that leads to the divorce of parents", raw: "that leads to the divorce of parents" }
+        ],
+        correct: "A",
+        explanation: {
+          translation: "Gia đình hạt nhân xếp hạng là kiểu gia đình phổ biến nhất ở nhiều quốc gia công nghiệp hóa.",
+          cards: [
+            { word: "industrialized countries", isCorrect: true, badgeText: "khớp đoạn 1", badgeType: "badge-correct", meaning: "= ở các xã hội công nghiệp phương Tây" },
+            { word: "nuclear weapons", isCorrect: false, badgeText: "bẫy từ vựng", badgeType: "badge-wrong", meaning: "= các nước có vũ khí hạt nhân (sai hoàn toàn)" },
+            { word: "more than two generations", isCorrect: false, badgeText: "sai định nghĩa", badgeType: "badge-wrong", meaning: "= hơn 2 thế hệ là gia đình đa thế hệ (extended)" },
+            { word: "leads to divorce", isCorrect: false, badgeText: "sai thông tin", badgeType: "badge-wrong", meaning: "= dẫn đến sự ly hôn của cha mẹ" }
+          ],
+          whyCorrect: { ruleTitle: "Tìm thông tin chi tiết trong bài đọc", detail: "Câu thứ 2 đoạn 1 nêu rõ: <span class='exp-highlight-green'>'In Western, industrialized societies, the nuclear family ranks as the most common family type.'</span>" },
+          whyWrong: [
+            { word: "B", reason: "bẫy chữ 'nuclear' (hạt nhân), không liên quan vũ khí." },
+            { word: "C", reason: "gia đình hạt nhân chỉ có 2 thế hệ (bố mẹ và con cái)." },
+            { word: "D", reason: "sai lệch thông tin hoàn toàn." }
+          ]
+        }
+      },
+      {
+        id: 25,
+        exTitle: "I. PHẦN TRẮC NGHIỆM - Read the following passage and mark the letter A, B, C, or D to indicate the correct answer to each of the questions.",
+        question: "Question 25: In the single-parent family, ________.",
+        options: [
+          { key: "A", text: "there are often no children", raw: "there are often no children" },
+          { key: "B", text: "only one parent lives with his or her child or children", raw: "only one parent lives with his or her child or children" },
+          { key: "C", text: "the number of blended children has increased", raw: "the number of blended children has increased" },
+          { key: "D", text: "children live with their grandparents", raw: "children live with their grandparents" }
+        ],
+        correct: "B",
+        explanation: {
+          translation: "Trong gia đình đơn thân, chỉ có một người cha hoặc một người mẹ sống cùng với (các) con của mình.",
+          cards: [
+            { word: "no children", isCorrect: false, badgeText: "sai định nghĩa", badgeType: "badge-wrong", meaning: "= không có con cái (nếu không có con thì không gọi là parent)" },
+            { word: "only one parent lives...", isCorrect: true, badgeText: "khớp đoạn 1", badgeType: "badge-correct", meaning: "= chỉ 1 phụ huynh làm chủ gia đình nuôi con" },
+            { word: "blended children", isCorrect: false, badgeText: "nhầm loại gia đình", badgeType: "badge-wrong", meaning: "= nhầm sang blended family" },
+            { word: "with grandparents", isCorrect: false, badgeText: "sai thông tin", badgeType: "badge-wrong", meaning: "= sống với ông bà" }
+          ],
+          whyCorrect: { ruleTitle: "Đọc hiểu định nghĩa Gia đình đơn thân", detail: "Đoạn 1 giải thích: <span class='exp-highlight-green'>'In the single-parent family, for example, a mother or a father heads the family alone.'</span> (một người mẹ hoặc một người cha một mình làm chủ gia đình nuôi con)." },
+          whyWrong: [
+            { word: "A, C, D", reason: "mâu thuẫn trực tiếp với định nghĩa single-parent family trong bài." }
+          ]
+        }
+      },
+      {
+        id: 26,
+        exTitle: "I. PHẦN TRẮC NGHIỆM - Read the following passage and mark the letter A, B, C, or D to indicate the correct answer to each of the questions.",
+        question: "Question 26: Grandparents, parents and children are mentioned as ________.",
+        options: [
+          { key: "A", text: "the three typical generations of an extended family", raw: "the three typical generations of an extended family" },
+          { key: "B", text: "three branches of a family tree", raw: "three branches of a family tree" },
+          { key: "C", text: "the closest and happiest relatives in family units", raw: "the closest and happiest relatives in family units" },
+          { key: "D", text: "a complex combination", raw: "a complex combination" }
+        ],
+        correct: "A",
+        explanation: {
+          translation: "Ông bà, cha mẹ và con cái được đề cập đến như là ba thế hệ điển hình của một đại gia đình (gia đình mở rộng).",
+          cards: [
+            { word: "three typical generations", isCorrect: true, badgeText: "khớp đoạn 2", badgeType: "badge-correct", meaning: "= 3 thế hệ tiêu biểu của một đại gia đình" },
+            { word: "branches of family tree", isCorrect: false, badgeText: "không nêu", badgeType: "badge-wrong", meaning: "= 3 nhánh của cây phả hệ" },
+            { word: "closest and happiest", isCorrect: false, badgeText: "không nêu", badgeType: "badge-wrong", meaning: "= người thân gần gũi và hạnh phúc nhất" },
+            { word: "complex combination", isCorrect: false, badgeText: "chưa đầy đủ", badgeType: "badge-wrong", meaning: "= sự kết hợp phức tạp" }
+          ],
+          whyCorrect: { ruleTitle: "Tìm chi tiết dẫn chứng ở đoạn 2", detail: "Câu thứ 2 đoạn 2 viết: <span class='exp-highlight-green'>'These complex families usually contain several generations of family members, including grandparents, parents and children.'</span>" },
+          whyWrong: [
+            { word: "B, C, D", reason: "không phản ánh đúng ý giải thích về các thế hệ (generations) trong đại gia đình." }
+          ]
+        }
+      },
+      {
+        id: 27,
+        exTitle: "I. PHẦN TRẮC NGHIỆM - Read the following passage and mark the letter A, B, C, or D to indicate the correct answer to each of the questions.",
+        question: "Question 27: The second paragraph is about ________.",
+        options: [
+          { key: "A", text: "American culture", raw: "American culture" },
+          { key: "B", text: "relatives and family members", raw: "relatives and family members" },
+          { key: "C", text: "the relationship between family members", raw: "the relationship between family members" },
+          { key: "D", text: "the extended family", raw: "the extended family" }
+        ],
+        correct: "D",
+        explanation: {
+          translation: "Đoạn văn thứ hai viết về mô hình đại gia đình (gia đình nhiều thế hệ).",
+          cards: [
+            { word: "American culture", isCorrect: false, badgeText: "sai thông tin", badgeType: "badge-wrong", meaning: "= văn hóa Mỹ (không được nhắc tới)" },
+            { word: "relatives & members", isCorrect: false, badgeText: "quá chung chung", badgeType: "badge-wrong", meaning: "= họ hàng và thành viên" },
+            { word: "relationship", isCorrect: false, badgeText: "sai trọng tâm", badgeType: "badge-wrong", meaning: "= mối quan hệ tình cảm" },
+            { word: "the extended family", isCorrect: true, badgeText: "ý chính đoạn 2", badgeType: "badge-correct", meaning: "= đại gia đình nhiều thế hệ (extended family)" }
+          ],
+          whyCorrect: { ruleTitle: "Xác định chủ đề chính của đoạn văn", detail: "Toàn bộ đoạn 2 mô tả việc nhiều thế hệ sống chung dưới một mái nhà và kết thúc bằng khái niệm <span class='exp-highlight-green'>'the same extended family'</span>." },
+          whyWrong: [
+            { word: "A, B, C", reason: "không nêu đúng thuật ngữ loại hình gia đình mà đoạn 2 đang phân tích." }
+          ]
+        }
+      },
+      {
+        id: 28,
+        exTitle: "I. PHẦN TRẮC NGHIỆM - Read the following passage and mark the letter A, B, C, or D to indicate the correct answer to each of the questions.",
+        question: "Question 28: The word “<u>blended</u>” in paragraph 1 is closest in meaning to ________.",
+        options: [
+          { key: "A", text: "complex", raw: "complex" },
+          { key: "B", text: "married", raw: "married" },
+          { key: "C", text: "mixed", raw: "mixed" },
+          { key: "D", text: "formed", raw: "formed" }
+        ],
+        correct: "C",
+        explanation: {
+          translation: "Từ “blended” (pha trộn, ghép lại) ở đoạn 1 gần nghĩa nhất với từ “mixed”.",
+          cards: [
+            { word: "complex", isCorrect: false, badgeText: "phức tạp", badgeType: "badge-structure", meaning: "= phức tạp, rắc rối" },
+            { word: "married", isCorrect: false, badgeText: "kết hôn", badgeType: "badge-structure", meaning: "= đã kết hôn" },
+            { word: "mixed", isCorrect: true, badgeText: "đồng nghĩa chuẩn", badgeType: "badge-correct", meaning: "= kết hợp, pha trộn, ghép lại (= blended)" },
+            { word: "formed", isCorrect: false, badgeText: "hình thành", badgeType: "badge-structure", meaning: "= được tạo thành" }
+          ],
+          whyCorrect: { ruleTitle: "Đoán nghĩa từ vựng qua ngữ cảnh", detail: "Động từ 'blend' = 'mix' (trộn lẫn, kết hợp lại). <span class='exp-highlight-green'>A blended family</span> (gia đình tái hợp/ghép giữa bố hoặc mẹ tái hôn cùng con riêng) đồng nghĩa với <span class='exp-highlight-green'>mixed</span>." },
+          whyWrong: [
+            { word: "complex, married, formed", reason: "không phải là từ đồng nghĩa của tính từ blended." }
+          ]
+        }
+      },
+
+      // II. PHẦN TỰ LUẬN (CHUYỂN THÀNH TRẮC NGHIỆM ABCD - Câu 29 - 40)
+      {
+        id: 29,
+        exTitle: "II. PHẦN TỰ LUẬN - Complete the following sentences with the correct forms of the words in capitals.",
+        question: "Question 29: It is parents' duty and ________ to join hands to take care of their children and give them a happy home. (RESPONSIBLE)",
+        options: [
+          { key: "A", text: "responsibility", raw: "responsibility" },
+          { key: "B", text: "responsibly", raw: "responsibly" },
+          { key: "C", text: "irresponsible", raw: "irresponsible" },
+          { key: "D", text: "responsibilities", raw: "responsibilities" }
+        ],
+        correct: "A",
+        explanation: {
+          translation: "Đó là bổn phận và trách nhiệm của cha mẹ khi chung tay chăm sóc con cái và mang lại cho chúng một mái ấm hạnh phúc.",
+          cards: [
+            { word: "responsibility", isCorrect: true, badgeText: "danh từ chuẩn", badgeType: "badge-correct", meaning: "= trách nhiệm (song hành cùng danh từ số ít 'duty')" },
+            { word: "responsibly", isCorrect: false, badgeText: "trạng từ", badgeType: "badge-wrong", meaning: "= một cách có trách nhiệm" },
+            { word: "irresponsible", isCorrect: false, badgeText: "tính từ", badgeType: "badge-wrong", meaning: "= vô trách nhiệm" },
+            { word: "responsibilities", isCorrect: false, badgeText: "số nhiều", badgeType: "badge-structure", meaning: "= 'duty' ở dạng số ít nên ưu tiên dùng 'responsibility' đồng nhất" }
+          ],
+          whyCorrect: { ruleTitle: "Cấu trúc song hành danh từ sau sở hữu cách", detail: "Sau sở hữu cách <span class='exp-highlight-green'>parents'</span> và đứng sau 'duty and...' cần một danh từ tương đương: <span class='exp-highlight-green'>duty and responsibility</span> (bổn phận và trách nhiệm)." },
+          whyWrong: [
+            { word: "responsibly, irresponsible", reason: "sai từ loại (trạng từ và tính từ)." },
+            { word: "responsibilities", reason: "chủ ngữ giả 'It is' và 'duty' đang ở số ít." }
+          ]
+        }
+      },
+      {
+        id: 30,
+        exTitle: "II. PHẦN TỰ LUẬN - Complete the following sentences with the correct forms of the words in capitals.",
+        question: "Question 30: The measures should help create jobs and ________ the economy. (STRONG)",
+        options: [
+          { key: "A", text: "strength", raw: "strength" },
+          { key: "B", text: "strengthen", raw: "strengthen" },
+          { key: "C", text: "strongly", raw: "strongly" },
+          { key: "D", text: "stronger", raw: "stronger" }
+        ],
+        correct: "B",
+        explanation: {
+          translation: "Các biện pháp này sẽ giúp tạo thêm việc làm và củng cố nền kinh tế vững mạnh.",
+          cards: [
+            { word: "strength", isCorrect: false, badgeText: "danh từ", badgeType: "badge-wrong", meaning: "= sức mạnh" },
+            { word: "strengthen", isCorrect: true, badgeText: "động từ chuẩn", badgeType: "badge-correct", meaning: "= củng cố, làm vững mạnh (song hành với động từ create)" },
+            { word: "strongly", isCorrect: false, badgeText: "trạng từ", badgeType: "badge-wrong", meaning: "= một cách mạnh mẽ" },
+            { word: "stronger", isCorrect: false, badgeText: "tính từ so sánh", badgeType: "badge-wrong", meaning: "= khỏe hơn" }
+          ],
+          whyCorrect: { ruleTitle: "Hậu tố tạo động từ '-en' & Cấu trúc song hành", detail: "Cấu trúc: 'help + V-bare (create jobs) and + V-bare'. Động từ của tính từ 'strong' là chuyển thành danh từ 'strength' rồi thêm đuôi '-en': <span class='exp-highlight-green'>strengthen</span> (làm cho mạnh lên, củng cố)." },
+          whyWrong: [
+            { word: "strength, strongly, stronger", reason: "cần một ngoại động từ nguyên mẫu đứng trước tân ngữ 'the economy'." }
+          ]
+        }
+      },
+      {
+        id: 31,
+        exTitle: "II. PHẦN TỰ LUẬN - Complete the following sentences with the correct forms of the words in capitals.",
+        question: "Question 31: She cleans up ________ after she has finished cooking. (SPOTLESS)",
+        options: [
+          { key: "A", text: "spotlessly", raw: "spotlessly" },
+          { key: "B", text: "spotless", raw: "spotless" },
+          { key: "C", text: "spot", raw: "spot" },
+          { key: "D", text: "spotted", raw: "spotted" }
+        ],
+        correct: "A",
+        explanation: {
+          translation: "Cô ấy dọn dẹp sạch bong không tì vết sau khi nấu ăn xong.",
+          cards: [
+            { word: "spotlessly", isCorrect: true, badgeText: "trạng từ chuẩn", badgeType: "badge-correct", meaning: "= một cách sạch bong, không một vết bẩn" },
+            { word: "spotless", isCorrect: false, badgeText: "tính từ", badgeType: "badge-wrong", meaning: "= sạch tinh tươm" },
+            { word: "spot", isCorrect: false, badgeText: "danh từ/động từ", badgeType: "badge-wrong", meaning: "= vết đốm, phát hiện" },
+            { word: "spotted", isCorrect: false, badgeText: "tính từ", badgeType: "badge-wrong", meaning: "= có đốm chấm" }
+          ],
+          whyCorrect: { ruleTitle: "Trạng từ bổ nghĩa cho cụm động từ thường", detail: "Đứng sau cụm động từ thường <span class='exp-highlight-green'>'cleans up'</span> (dọn dẹp) cần một trạng từ chỉ cách thức thực hiện hành động → Thêm đuôi '-ly' vào tính từ spotless: <span class='exp-highlight-green'>spotlessly</span>." },
+          whyWrong: [
+            { word: "spotless, spot, spotted", reason: "không phải là trạng từ nên không bổ nghĩa cho động từ cleans up." }
+          ]
+        }
+      },
+      {
+        id: 32,
+        exTitle: "II. PHẦN TỰ LUẬN - Complete the following sentences with the correct forms of the words in capitals.",
+        question: "Question 32: I'm lucky to have such a(n) ________ brother who always gives me help when I need it. (SUPPORT)",
+        options: [
+          { key: "A", text: "supportive", raw: "supportive" },
+          { key: "B", text: "supporter", raw: "supporter" },
+          { key: "C", text: "supporting", raw: "supporting" },
+          { key: "D", text: "supported", raw: "supported" }
+        ],
+        correct: "A",
+        explanation: {
+          translation: "Tôi thật may mắn khi có một người anh trai luôn hết lòng ủng hộ và giúp đỡ tôi mỗi khi tôi cần.",
+          cards: [
+            { word: "supportive", isCorrect: true, badgeText: "tính từ chuẩn", badgeType: "badge-correct", meaning: "= luôn biết cảm thông, nâng đỡ, hỗ trợ (supportive brother)" },
+            { word: "supporter", isCorrect: false, badgeText: "danh từ", badgeType: "badge-wrong", meaning: "= cổ động viên, người ủng hộ" },
+            { word: "supporting", isCorrect: false, badgeText: "phụ (diễn viên)", badgeType: "badge-wrong", meaning: "= vai phụ (supporting actor)" },
+            { word: "supported", isCorrect: false, badgeText: "bị động", badgeType: "badge-wrong", meaning: "= được hỗ trợ" }
+          ],
+          whyCorrect: { ruleTitle: "Tính từ mô tả phẩm chất con người", detail: "Đứng trước danh từ 'brother' cần một tính từ chỉ phẩm chất tốt bụng hay giúp đỡ người khác → Dùng tính từ <span class='exp-highlight-green'>supportive</span>." },
+          whyWrong: [
+            { word: "supporter", reason: "danh từ không đứng bổ nghĩa cho brother." },
+            { word: "supporting", reason: "thường chỉ vai diễn phụ trong điện ảnh." },
+            { word: "supported", reason: "mang nghĩa bị động." }
+          ]
+        }
+      },
+      {
+        id: 33,
+        exTitle: "II. PHẦN TỰ LUẬN - Reorder the given words to make meaningful sentences.",
+        question: "Question 33: Reorder the given words:<br><b>husband / My / responsible / household / is / finance / for</b>",
+        options: [
+          { key: "A", text: "My husband is responsible for household finance.", raw: "My husband is responsible for household finance." },
+          { key: "B", text: "My husband is for responsible household finance.", raw: "My husband is for responsible household finance." },
+          { key: "C", text: "My household finance is responsible for husband.", raw: "My household finance is responsible for husband." },
+          { key: "D", text: "My husband responsible is for finance household.", raw: "My husband responsible is for finance household." }
+        ],
+        correct: "A",
+        explanation: {
+          translation: "Chồng tôi chịu trách nhiệm về tài chính trong gia đình.",
+          cards: [
+            { word: "Câu A", isCorrect: true, badgeText: "chuẩn 100%", badgeType: "badge-correct", meaning: "= My husband is responsible for household finance." },
+            { word: "Câu B", isCorrect: false, badgeText: "sai vị trí 'for'", badgeType: "badge-wrong", meaning: "= đặt for trước responsible là sai" },
+            { word: "Câu C", isCorrect: false, badgeText: "ngược chủ ngữ", badgeType: "badge-wrong", meaning: "= tài chính không thể chịu trách nhiệm cho chồng" },
+            { word: "Câu D", isCorrect: false, badgeText: "sai trật tự", badgeType: "badge-wrong", meaning: "= đặt responsible trước to be is là sai" }
+          ],
+          whyCorrect: { ruleTitle: "Cấu trúc Be responsible for sth", detail: "Chủ ngữ <span class='exp-highlight-green'>My husband</span> + cụm vị ngữ <span class='exp-highlight-green'>is responsible for</span> (chịu trách nhiệm về) + cụm danh từ <span class='exp-highlight-green'>household finance</span> (tài chính gia đình)." },
+          whyWrong: [
+            { word: "B, C, D", reason: "sai trật tự cấu trúc câu cơ bản." }
+          ]
+        }
+      },
+      {
+        id: 34,
+        exTitle: "II. PHẦN TỰ LUẬN - Reorder the given words to make meaningful sentences.",
+        question: "Question 34: Reorder the given words:<br><b>and / a / works / person / at / who / home / takes / Homemaker / care / and / the / is / house / of / family.</b>",
+        options: [
+          { key: "A", text: "Homemaker is a person who works at home and takes care of the house and family.", raw: "Homemaker is a person who works at home and takes care of the house and family." },
+          { key: "B", text: "Homemaker is a person who takes care at home and works of the house and family.", raw: "Homemaker is a person who takes care at home and works of the house and family." },
+          { key: "C", text: "A person is Homemaker who works at home and takes care of the house and family.", raw: "A person is Homemaker who works at home and takes care of the house and family." },
+          { key: "D", text: "Homemaker who works at home is a person and takes care of the house and family.", raw: "Homemaker who works at home is a person and takes care of the house and family." }
+        ],
+        correct: "A",
+        explanation: {
+          translation: "Người nội trợ là người làm việc tại nhà và chăm sóc nhà cửa cùng gia đình.",
+          cards: [
+            { word: "Câu A", isCorrect: true, badgeText: "chuẩn định nghĩa", badgeType: "badge-correct", meaning: "= Homemaker is a person who works at home and takes care of the house and family." },
+            { word: "Câu B", isCorrect: false, badgeText: "râu ông nọ", badgeType: "badge-wrong", meaning: "= 'works of the house' là sai giới từ" },
+            { word: "Câu C", isCorrect: false, badgeText: "ngược định nghĩa", badgeType: "badge-wrong", meaning: "= đặt A person làm chủ ngữ chính là ngược" },
+            { word: "Câu D", isCorrect: false, badgeText: "tách mệnh đề", badgeType: "badge-wrong", meaning: "= tách mệnh đề quan hệ làm câu lủng củng" }
+          ],
+          whyCorrect: { ruleTitle: "Cấu trúc định nghĩa danh từ với mệnh đề quan hệ 'who'", detail: "<span class='exp-highlight-green'>Homemaker is a person who...</span> + động từ 1: <span class='exp-highlight-green'>works at home</span> + and + động từ 2: <span class='exp-highlight-green'>takes care of the house and family</span>." },
+          whyWrong: [
+            { word: "B, C, D", reason: "lắp ghép sai vị trí các cụm giới từ và mệnh đề quan hệ." }
+          ]
+        }
+      },
+      {
+        id: 35,
+        exTitle: "II. PHẦN TỰ LUẬN - Reorder the given words to make meaningful sentences.",
+        question: "Question 35: Reorder the given words:<br><b>every / goes / My / the / for / supermarket / mom / to / Sunday / shopping.</b>",
+        options: [
+          { key: "A", text: "My mom goes to the supermarket for shopping every Sunday.", raw: "My mom goes to the supermarket for shopping every Sunday." },
+          { key: "B", text: "My mom goes for the supermarket to shopping every Sunday.", raw: "My mom goes for the supermarket to shopping every Sunday." },
+          { key: "C", text: "Every Sunday my mom goes shopping for to the supermarket.", raw: "Every Sunday my mom goes shopping for to the supermarket." },
+          { key: "D", text: "My mom to the supermarket goes for shopping every Sunday.", raw: "My mom to the supermarket goes for shopping every Sunday." }
+        ],
+        correct: "A",
+        explanation: {
+          translation: "Mẹ của tôi đi đến siêu thị để mua sắm vào mỗi Chủ nhật.",
+          cards: [
+            { word: "Câu A", isCorrect: true, badgeText: "chuẩn xác 100%", badgeType: "badge-correct", meaning: "= My mom goes to the supermarket for shopping every Sunday." },
+            { word: "Câu B", isCorrect: false, badgeText: "ngược giới từ", badgeType: "badge-wrong", meaning: "= đổi chỗ to và for làm sai nghĩa" },
+            { word: "Câu C", isCorrect: false, badgeText: "thừa giới từ", badgeType: "badge-wrong", meaning: "= 'for to' đứng cạnh nhau là sai" },
+            { word: "Câu D", isCorrect: false, badgeText: "sai vị trí V", badgeType: "badge-wrong", meaning: "= chèn cụm địa điểm vào giữa chủ ngữ và động từ" }
+          ],
+          whyCorrect: { ruleTitle: "Trật tự câu: S + V + Nơi chốn + Mục đích + Thời gian", detail: "Chủ ngữ: <span class='exp-highlight-green'>My mom</span> + Động từ & Nơi chốn: <span class='exp-highlight-green'>goes to the supermarket</span> + Mục đích: <span class='exp-highlight-green'>for shopping</span> + Thời gian: <span class='exp-highlight-green'>every Sunday</span>." },
+          whyWrong: [
+            { word: "B, C, D", reason: "sắp xếp sai vị trí động từ và giới từ." }
+          ]
+        }
+      },
+      {
+        id: 36,
+        exTitle: "II. PHẦN TỰ LUẬN - Reorder the given words to make meaningful sentences.",
+        question: "Question 36: Reorder the given words:<br><b>for / sometimes / has / Bich / noodle / soup / chicken / breakfast.</b>",
+        options: [
+          { key: "A", text: "Bich sometimes has chicken noodle soup for breakfast.", raw: "Bich sometimes has chicken noodle soup for breakfast." },
+          { key: "B", text: "Bich has sometimes noodle chicken soup for breakfast.", raw: "Bich has sometimes noodle chicken soup for breakfast." },
+          { key: "C", text: "Bich sometimes has soup chicken noodle for breakfast.", raw: "Bich sometimes has soup chicken noodle for breakfast." },
+          { key: "D", text: "For breakfast Bich has sometimes chicken noodle soup.", raw: "For breakfast Bich has sometimes chicken noodle soup." }
+        ],
+        correct: "A",
+        explanation: {
+          translation: "Bích thỉnh thoảng ăn phở gà (súp mì gà) vào bữa sáng.",
+          cards: [
+            { word: "Câu A", isCorrect: true, badgeText: "chuẩn 100%", badgeType: "badge-correct", meaning: "= Bich sometimes has chicken noodle soup for breakfast." },
+            { word: "Câu B", isCorrect: false, badgeText: "sai vị trí trạng từ", badgeType: "badge-wrong", meaning: "= đặt sometimes sau has và ngược noodle chicken" },
+            { word: "Câu C", isCorrect: false, badgeText: "sai cụm món ăn", badgeType: "badge-wrong", meaning: "= 'soup chicken noodle' bị ngược danh từ chính" },
+            { word: "Câu D", isCorrect: false, badgeText: "sai vị trí sometimes", badgeType: "badge-wrong", meaning: "= trạng từ tần suất phải đứng trước động từ thường has" }
+          ],
+          whyCorrect: { ruleTitle: "Vị trí trạng từ tần suất & Cụm danh từ món ăn", detail: "1. Trạng từ tần suất 'sometimes' đứng trước động từ thường 'has': <span class='exp-highlight-green'>Bich sometimes has</span>.<br>2. Tên món ăn: <span class='exp-highlight-green'>chicken noodle soup</span> (phở gà/miến gà) + <span class='exp-highlight-green'>for breakfast</span> (cho bữa sáng)." },
+          whyWrong: [
+            { word: "B, C, D", reason: "sai vị trí trạng từ tần suất và trật tự cụm danh từ ghép." }
+          ]
+        }
+      },
+      {
+        id: 37,
+        exTitle: "II. PHẦN TỰ LUẬN - Use the given words or phrases to make meaningful sentences.",
+        question: "Question 37: Make a meaningful sentence from the given words:<br><b>my mother / cook / dinner / and / my father / wash / the dishes / after meal</b>",
+        options: [
+          { key: "A", text: "My mother cooks dinner and my father washes the dishes after meals.", raw: "My mother cooks dinner and my father washes the dishes after meals." },
+          { key: "B", text: "My mother cook dinner and my father wash the dishes after meal.", raw: "My mother cook dinner and my father wash the dishes after meal." },
+          { key: "C", text: "My mother cooking dinner and my father washing the dishes after meal.", raw: "My mother cooking dinner and my father washing the dishes after meal." },
+          { key: "D", text: "My mother cooks dinner and my father wash the dishes after the meal.", raw: "My mother cooks dinner and my father wash the dishes after the meal." }
+        ],
+        correct: "A",
+        explanation: {
+          translation: "Mẹ tôi nấu bữa tối và bố tôi rửa bát đĩa sau bữa ăn.",
+          cards: [
+            { word: "Câu A", isCorrect: true, badgeText: "chia thì chuẩn", badgeType: "badge-correct", meaning: "= chia ngôi 3 số ít cooks và washes, hoàn chỉnh câu" },
+            { word: "Câu B", isCorrect: false, badgeText: "chưa chia động từ", badgeType: "badge-wrong", meaning: "= để nguyên cook và wash cho chủ ngữ số ít là sai" },
+            { word: "Câu C", isCorrect: false, badgeText: "thiếu to be", badgeType: "badge-wrong", meaning: "= dùng V-ing mà không có động từ to be" },
+            { word: "Câu D", isCorrect: false, badgeText: "chưa chia wash", badgeType: "badge-wrong", meaning: "= my father là ngôi 3 số ít nên wash phải thêm -es" }
+          ],
+          whyCorrect: { ruleTitle: "Chia động từ thì Hiện tại đơn ngôi thứ 3 số ít", detail: "Chủ ngữ 'My mother' → thêm -s: <span class='exp-highlight-green'>cooks dinner</span>; chủ ngữ 'my father' → tận cùng là -sh nên thêm -es: <span class='exp-highlight-green'>washes the dishes after meals / after the meal</span>." },
+          whyWrong: [
+            { word: "B, C, D", reason: "sai chia động từ theo chủ ngữ ngôi thứ 3 số ít." }
+          ]
+        }
+      },
+      {
+        id: 38,
+        exTitle: "II. PHẦN TỰ LUẬN - Use the given words or phrases to make meaningful sentences.",
+        question: "Question 38: Make a meaningful sentence from the given words:<br><b>we / help / parents / do / housework / because / we / want / them / have / more / free time</b>",
+        options: [
+          { key: "A", text: "We help our parents do the housework because we want them to have more free time.", raw: "We help our parents do the housework because we want them to have more free time." },
+          { key: "B", text: "We help our parents doing the housework because we want them having more free time.", raw: "We help our parents doing the housework because we want them having more free time." },
+          { key: "C", text: "We helps parents do housework because we wants them to have more free time.", raw: "We helps parents do housework because we wants them to have more free time." },
+          { key: "D", text: "We help our parents to do housework because we want that they have more free time.", raw: "We help our parents to do housework because we want that they have more free time." }
+        ],
+        correct: "A",
+        explanation: {
+          translation: "Chúng tôi giúp bố mẹ làm việc nhà bởi vì chúng tôi muốn bố mẹ có thêm nhiều thời gian rảnh rỗi hơn.",
+          cards: [
+            { word: "Câu A", isCorrect: true, badgeText: "chuẩn cấu trúc", badgeType: "badge-correct", meaning: "= help sb do sth, want sb to do sth" },
+            { word: "Câu B", isCorrect: false, badgeText: "sai V-ing", badgeType: "badge-wrong", meaning: "= help và want không đi với tân ngữ + V-ing" },
+            { word: "Câu C", isCorrect: false, badgeText: "chia sai ngôi We", badgeType: "badge-wrong", meaning: "= chủ ngữ 'We' không thêm -s vào động từ" },
+            { word: "Câu D", isCorrect: false, badgeText: "sai want that", badgeType: "badge-wrong", meaning: "= trong tiếng Anh tuyệt đối không dùng 'want that...'" }
+          ],
+          whyCorrect: { ruleTitle: "Cấu trúc Help sb (to) V & Want sb to V", detail: "1. Giúp ai làm gì: <span class='exp-highlight-green'>help our parents (to) do the housework</span>.<br>2. Muốn ai làm gì: <span class='exp-highlight-green'>want + O + to V</span> → <span class='exp-highlight-green'>want them to have more free time</span>." },
+          whyWrong: [
+            { word: "B, C, D", reason: "sai cấu trúc động từ theo sau help và want." }
+          ]
+        }
+      },
+      {
+        id: 39,
+        exTitle: "II. PHẦN TỰ LUẬN - Use the given words or phrases to make meaningful sentences.",
+        question: "Question 39: Make a meaningful sentence from the given words:<br><b>when / I / finish / homework / I / often / clean / my room / and / water / the plants</b>",
+        options: [
+          { key: "A", text: "When I finish my homework, I often clean my room and water the plants.", raw: "When I finish my homework, I often clean my room and water the plants." },
+          { key: "B", text: "When I finishes my homework, I often cleans my room and waters the plants.", raw: "When I finishes my homework, I often cleans my room and waters the plants." },
+          { key: "C", text: "When I finishing homework, I often clean my room and watering the plants.", raw: "When I finishing homework, I often clean my room and watering the plants." },
+          { key: "D", text: "When I finish my homework, often I clean my room and to water the plants.", raw: "When I finish my homework, often I clean my room and to water the plants." }
+        ],
+        correct: "A",
+        explanation: {
+          translation: "Khi tôi hoàn thành bài tập về nhà, tôi thường dọn phòng của mình và tưới cây.",
+          cards: [
+            { word: "Câu A", isCorrect: true, badgeText: "chuẩn 100%", badgeType: "badge-correct", meaning: "= When I finish my homework, I often clean my room and water the plants." },
+            { word: "Câu B", isCorrect: false, badgeText: "thừa -s/-es", badgeType: "badge-wrong", meaning: "= chủ ngữ 'I' không chia động từ thêm s/es" },
+            { word: "Câu C", isCorrect: false, badgeText: "sai dạng V-ing", badgeType: "badge-wrong", meaning: "= dùng finishing và watering không có to be" },
+            { word: "Câu D", isCorrect: false, badgeText: "lệch cấu trúc", badgeType: "badge-wrong", meaning: "= clean và to water không song hành" }
+          ],
+          whyCorrect: { ruleTitle: "Thì Hiện tại đơn diễn tả thói quen với chủ ngữ 'I'", detail: "Với chủ ngữ ngôi thứ nhất <span class='exp-highlight-green'>I</span>, các động từ ở thì hiện tại đơn giữ nguyên mẫu: <span class='exp-highlight-green'>finish</span>, <span class='exp-highlight-green'>clean</span>, và <span class='exp-highlight-green'>water</span>." },
+          whyWrong: [
+            { word: "B, C, D", reason: "chia sai dạng động từ với chủ ngữ 'I'." }
+          ]
+        }
+      },
+      {
+        id: 40,
+        exTitle: "II. PHẦN TỰ LUẬN - Use the given words or phrases to make meaningful sentences.",
+        question: "Question 40: Make a meaningful sentence from the given words:<br><b>my family / share / chores / so / our home / always / look / clean / and / comfortable</b>",
+        options: [
+          { key: "A", text: "My family shares the chores, so our home always looks clean and comfortable.", raw: "My family shares the chores, so our home always looks clean and comfortable." },
+          { key: "B", text: "My family share chores, so our home always look clean and comfortably.", raw: "My family share chores, so our home always look clean and comfortably." },
+          { key: "C", text: "My family sharing the chores, so our home is always looking clean and comfortable.", raw: "My family sharing the chores, so our home is always looking clean and comfortable." },
+          { key: "D", text: "My family shares the chores, so our home look always cleanly and comfortable.", raw: "My family shares the chores, so our home look always cleanly and comfortable." }
+        ],
+        correct: "A",
+        explanation: {
+          translation: "Gia đình tôi cùng nhau chia sẻ công việc nhà, vì vậy ngôi nhà của chúng tôi luôn trông sạch sẽ và thoải mái.",
+          cards: [
+            { word: "Câu A", isCorrect: true, badgeText: "chuẩn ngữ pháp", badgeType: "badge-correct", meaning: "= shares the chores, our home always looks + adj (clean and comfortable)" },
+            { word: "Câu B", isCorrect: false, badgeText: "sai trạng từ", badgeType: "badge-wrong", meaning: "= sau động từ nối look phải là tính từ comfortable (không dùng comfortably)" },
+            { word: "Câu C", isCorrect: false, badgeText: "thiếu to be", badgeType: "badge-wrong", meaning: "= My family sharing thiếu động từ chính" },
+            { word: "Câu D", isCorrect: false, badgeText: "sai vị trí & từ loại", badgeType: "badge-wrong", meaning: "= our home số ít phải chia looks, sau look dùng tính từ clean" }
+          ],
+          whyCorrect: { ruleTitle: "Động từ nối (Linking Verb) 'Look' + Tính từ", detail: "1. Chủ ngữ số ít 'our home' đi với trạng từ tần suất: <span class='exp-highlight-green'>our home always looks</span>.<br>2. Sau linking verb 'look' (trông có vẻ) bắt buộc là các tính từ: <span class='exp-highlight-green'>looks clean and comfortable</span>." },
+          whyWrong: [
+            { word: "B, D", reason: "dùng trạng từ comfortably / cleanly sau động từ nối look là sai ngữ pháp." },
+            { word: "C", reason: "mệnh đề đầu thiếu động từ chia thì." }
+          ]
+        }
+      }
+    ];
+
+    const userAnswers = {};
+
+    /* WEB AUDIO API */
+    let audioCtx = null;
+    function getAudioContext() {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      return audioCtx;
+    }
+
+    function playCorrectSound() {
+      try {
+        const ctx = getAudioContext();
+        const now = ctx.currentTime;
+        const osc1 = ctx.createOscillator();
+        const osc2 = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc1.type = 'sine'; osc2.type = 'triangle';
+        osc1.frequency.setValueAtTime(1046.50, now);
+        osc1.frequency.exponentialRampToValueAtTime(1318.51, now + 0.12);
+        osc2.frequency.setValueAtTime(1318.51, now);
+        osc2.frequency.exponentialRampToValueAtTime(1567.98, now + 0.12);
+        gain.gain.setValueAtTime(0.25, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.65);
+        osc1.connect(gain); osc2.connect(gain); gain.connect(ctx.destination);
+        osc1.start(now); osc2.start(now);
+        osc1.stop(now + 0.65); osc2.stop(now + 0.65);
+      } catch (e) { console.log(e); }
+    }
+
+    function playWrongSound() {
+      try {
+        const ctx = getAudioContext();
+        const now = ctx.currentTime;
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(280, now);
+        osc.frequency.linearRampToValueAtTime(190, now + 0.15);
+        osc.frequency.linearRampToValueAtTime(130, now + 0.35);
+        gain.gain.setValueAtTime(0.2, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
+        osc.connect(gain); gain.connect(ctx.destination);
+        osc.start(now); osc.stop(now + 0.45);
+      } catch (e) { console.log(e); }
+    }
+
+    function launchConfetti() {
+      if (typeof confetti === 'function') {
+        confetti({ particleCount: 75, spread: 75, origin: { y: 0.72 }, colors: ['#8854C0', '#FDCB6E', '#00C9A7', '#FF4757', '#0984E3'] });
+      }
+    }
+
+    function shuffleArray(array) {
+      const arr = [...array];
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    function updateProgressBar() {
+      const answeredCount = Object.keys(userAnswers).length;
+      let correctCount = 0;
+      quizData.forEach(q => { if (userAnswers[q.id] === q.correct) correctCount++; });
+      const total = quizData.length;
+      const percent = (answeredCount / total) * 100;
+      document.getElementById('star-score-text').textContent = `${correctCount} / ${total}`;
+      document.getElementById('progress-ratio-text').textContent = `${answeredCount} / ${total}`;
+      document.getElementById('progress-bar-fill').style.width = `${percent}%`;
+    }
+
+    function renderQuiz() {
+      const container = document.getElementById('quiz-container');
+      container.innerHTML = '';
+      let currentEx = "";
+
+      quizData.forEach((q, idx) => {
+        if (q.exTitle !== currentEx) {
+          currentEx = q.exTitle;
+          const divider = document.createElement('div');
+          divider.className = 'exercise-divider';
+          divider.innerHTML = `<span>📘</span> <span>${currentEx}</span>`;
+          container.appendChild(divider);
+        }
+
+        const card = document.createElement('div');
+        card.className = 'question-card';
+        card.id = `q-card-${q.id}`;
+        const shuffledOptions = shuffleArray(q.options);
+
+        const optionsHTML = `
+          <div class="options-grid ${shuffledOptions.length === 4 ? 'two-cols' : ''}">
+            ${shuffledOptions.map(opt => `
+              <button type="button" class="option-btn" id="btn-${q.id}-${opt.key}" onclick="handleSelectOption(${q.id}, '${opt.key}')">
+                <span class="option-key">${opt.key}</span>
+                <span class="option-text">${opt.text}</span>
+              </button>
+            `).join('')}
+          </div>
+        `;
+
+        const exp = q.explanation;
+        const explanationHTML = `
+          <div class="explanation-box" id="exp-${q.id}" style="display: none;">
+            <div class="exp-title">⚡ GIẢI THÍCH CHI TIẾT</div>
+            <div class="exp-translation-bubble">
+              <span class="icon">💭</span>
+              <span><strong>Dịch:</strong> ${exp.translation}</span>
+            </div>
+            <div class="exp-section-title">1. Phân tích 4 đáp án:</div>
+            <div class="analysis-grid">
+              ${exp.cards.map(c => `
+                <div class="analysis-card">
+                  <span class="analysis-word ${c.isCorrect ? 'green' : ''}">${c.word}</span>
+                  <span class="badge-pill ${c.badgeType}">${c.badgeText}</span>
+                  <span class="analysis-meaning">${c.meaning}</span>
+                </div>
+              `).join('')}
+            </div>
+            <div class="exp-rule-row">
+              <span class="check-label">2. ✅ TẠI SAO ĐÚNG?</span>
+              <span class="exp-rule-pill">${exp.whyCorrect.ruleTitle}:</span>
+              <span>${exp.whyCorrect.detail}</span>
+            </div>
+            <div class="exp-wrong-row">
+              <span class="cross-label">3. ❌ TẠI SAO SAI?</span>
+              ${exp.whyWrong.map(w => `<span class="exp-wrong-tag">${w.word}</span> -${w.reason}`).join(' ')}
+            </div>
+          </div>
+        `;
+
+        card.innerHTML = `
+          <div class="question-header">
+            <span class="question-num">Câu ${idx + 1}</span>
+            <span class="question-type-badge">Chấm điểm tức thì</span>
+          </div>
+          <div class="question-content">${q.question}</div>
+          ${optionsHTML}
+          ${explanationHTML}
+        `;
+        container.appendChild(card);
+      });
+
+      updateProgressBar();
+    }
+
+    function handleSelectOption(qId, selectedKey) {
+      if (userAnswers[qId] !== undefined) return;
+      const q = quizData.find(item => item.id === qId);
+      userAnswers[qId] = selectedKey;
+
+      const isCorrect = (selectedKey === q.correct);
+      const selectedBtn = document.getElementById(`btn-${qId}-${selectedKey}`);
+
+      if (isCorrect) {
+        selectedBtn.classList.add('correct');
+        playCorrectSound();
+        launchConfetti();
+      } else {
+        selectedBtn.classList.add('wrong');
+        playWrongSound();
+        const correctBtn = document.getElementById(`btn-${qId}-${q.correct}`);
+        if (correctBtn) correctBtn.classList.add('correct');
+      }
+
+      q.options.forEach(opt => {
+        const b = document.getElementById(`btn-${qId}-${opt.key}`);
+        if (b) b.disabled = true;
+      });
+
+      const expBox = document.getElementById(`exp-${qId}`);
+      if (expBox) expBox.style.display = 'block';
+
+      updateProgressBar();
+    }
+
+    function submitQuiz() {
+      let score = 0;
+      quizData.forEach(q => { if (userAnswers[q.id] === q.correct) score++; });
+      const total = quizData.length;
+      const percentage = (score / total) * 100;
+      let emoji = '🌟';
+      let message = '';
+
+      if (percentage < 50) {
+        emoji = '💪';
+        message = '“Điểm lần này chưa cao lắm, con cố gắng đọc kỹ giải thích đáp án và làm lại nha. Cô tin con sẽ làm tốt hơn ở lần sau!”<br><br><strong>— Ms Lê Hằng English —</strong>';
+      } else if (percentage >= 50 && percentage < 90) {
+        emoji = '👏';
+        message = '“Con đã có tiến bộ khá ổn rồi, con cố gắng đọc kỹ giải thích đáp án và làm lại nha. Cô tin con sẽ làm tốt hơn ở lần sau!”<br><br><strong>— Ms Lê Hằng English —</strong>';
+      } else {
+        emoji = '👑';
+        message = '“Làm tốt lắm, con cố gắng ring điểm 10 ở lần sau nha!”<br><br><strong>— Ms Lê Hằng English —</strong>';
+        launchConfetti();
+      }
+
+      document.getElementById('result-emoji').innerHTML = emoji;
+      document.getElementById('result-score').textContent = `${score} / ${total} CÂU ĐÚNG (${Math.round(percentage)}%)`;
+      document.getElementById('result-feedback').innerHTML = message;
+      document.getElementById('result-modal').style.display = 'flex';
+    }
+
+    function retryQuiz() {
+      document.getElementById('result-modal').style.display = 'none';
+      for (const key in userAnswers) delete userAnswers[key];
+      renderQuiz();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      renderQuiz();
+    });
+  </script>
+</body>
+</html>
